@@ -4,6 +4,8 @@ import { ThemeProvider } from '@mui/material/styles'
 import theme from '../theme'
 import Sidebar from './components/Sidebar'
 import { Stack } from '@mui/material'
+import Header from './components/Header'
+
 export const metadata = {
   title: 'Park Project',
   description: 'Park Project',
@@ -16,7 +18,8 @@ export default function RootLayout({ children }) {
         <AppRouterCacheProvider options={{ key: 'css' }}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Stack direction="row" spacing={4}>
+            <Header />
+            <Stack sx={{ marginTop: '130px' }} direction="row" spacing={4}>
               <Sidebar />
               {children}
             </Stack>

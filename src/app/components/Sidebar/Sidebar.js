@@ -1,13 +1,17 @@
-import React from 'react'
-import { Drawer, List, ListItem, ListItemText } from '@mui/material'
-import Link from 'next/link'
+'use client'
 
-const drawerWidth = 200
+import React from 'react'
+import { Box, Drawer } from '@mui/material'
+import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView'
+import { TreeItem } from '@mui/x-tree-view/TreeItem'
+
+const drawerWidth = 240
 
 const Sidebar = () => {
   return (
     <Drawer
       sx={{
+        zIndex: 0,
         width: drawerWidth,
         flexShrink: 0,
         '& .MuiDrawer-paper': {
@@ -18,33 +22,22 @@ const Sidebar = () => {
       variant="permanent"
       anchor="left"
     >
-      <List>
-        <Link href="/" style={{ textDecoration: 'none' }}>
-          <ListItem button>
-            <ListItemText primary="Home" sx={{ textAlign: 'center' }} />
-          </ListItem>
-        </Link>
-        <Link href="/page2" style={{ textDecoration: 'none' }}>
-          <ListItem button>
-            <ListItemText primary="Page2" sx={{ textAlign: 'center' }} />
-          </ListItem>
-        </Link>
-        <Link href="/page3" style={{ textDecoration: 'none' }}>
-          <ListItem button>
-            <ListItemText primary="Page3" sx={{ textAlign: 'center' }} />
-          </ListItem>
-        </Link>
-        <Link href="/page4" style={{ textDecoration: 'none' }}>
-          <ListItem button>
-            <ListItemText primary="Page4" sx={{ textAlign: 'center' }} />
-          </ListItem>
-        </Link>
-        <Link href="/page5" style={{ textDecoration: 'none' }}>
-          <ListItem button>
-            <ListItemText primary="Page5" sx={{ textAlign: 'center' }} />
-          </ListItem>
-        </Link>
-      </List>
+      <Box sx={{ margin: '6px' }}>
+        <SimpleTreeView sx={{ marginTop: '120px' }} multiSelect>
+          <TreeItem itemId="서울정보통신사무소" label="서울정보통신사무소">
+            <TreeItem itemId="서울정보통신사무소-1" label="1번 RRU" />
+            <TreeItem itemId="서울정보통신사무소-2" label="2번 RRU" />
+          </TreeItem>
+          <TreeItem itemId="청량리" label="청량리">
+            <TreeItem itemId="청량리-1" label="1번 RRU" />
+            <TreeItem itemId="청량리-2" label="2번 RRU" />
+          </TreeItem>
+          <TreeItem itemId="의정부" label="의정부">
+            <TreeItem itemId="의정부-1" label="1번 RRU" />
+            <TreeItem itemId="의정부-2" label="2번 RRU" />
+          </TreeItem>
+        </SimpleTreeView>
+      </Box>
     </Drawer>
   )
 }
