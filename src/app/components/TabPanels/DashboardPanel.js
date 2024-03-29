@@ -6,10 +6,27 @@ import {
   Divider,
   Stack,
   Typography,
+  TableContainer,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Paper,
 } from '@mui/material'
 import React from 'react'
+import { useBatteryContext } from '../../context/BatteryContext'
+
+const columns = [
+  { id: 'label', label: '배터리 상태', minWidth: 170 },
+  { id: 'a', label: 'a', minWidth: 100 },
+  { id: 'b', label: 'b', minWidth: 100 },
+  { id: 'c', label: 'c', minWidth: 100 },
+]
 
 const DashboardPanel = () => {
+  const { batteryInfo } = useBatteryContext()
+
   return (
     <Box sx={{ p: '16px' }}>
       <Card
@@ -24,96 +41,65 @@ const DashboardPanel = () => {
       >
         <CardContent sx={{ p: 0 }}>
           <Box sx={{ padding: '0 12px', borderBottom: '1px solid #ccc' }}>
-            <Typography sx={{ p: 1.5 }} variant="h6" component="div">
+            <Typography sx={{ p: 1.5 }} variant="h7" component="div">
               총 알람상태
             </Typography>
           </Box>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            sx={{ padding: '0 12px', borderBottom: '1px solid #ccc' }}
-          >
-            <Box sx={{ display: 'flex' }}>
-              <Typography sx={{ p: 1.5, mr: 6 }} variant="h6" component="div">
-                배터리1
-              </Typography>
-              <Divider orientation="vertical" />
-              <Typography sx={{ p: 1.5 }} variant="h7" component="div">
-                10
-              </Typography>
-            </Box>
-            <Button
-              variant="outlined"
-              sx={{ minWidth: '150px', maxHeight: '40px', marginTop: '8px' }}
+          {batteryInfo.map((battery) => (
+            <Stack
+              key={battery.label}
+              direction="row"
+              justifyContent="space-between"
+              sx={{ padding: '0 12px', borderBottom: '1px solid #ccc' }}
             >
-              내부보기
-            </Button>
-          </Stack>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            sx={{ padding: '0 12px', borderBottom: '1px solid #ccc' }}
-          >
-            <Box sx={{ display: 'flex' }}>
-              <Typography sx={{ p: 1.5, mr: 6 }} variant="h6" component="div">
-                배터리2
-              </Typography>
-              <Divider orientation="vertical" />
-              <Typography sx={{ p: 1.5 }} variant="h7" component="div">
-                10
-              </Typography>
-            </Box>
-            <Button
-              variant="outlined"
-              sx={{ minWidth: '150px', maxHeight: '40px', marginTop: '8px' }}
-            >
-              내부보기
-            </Button>
-          </Stack>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            sx={{ padding: '0 12px', borderBottom: '1px solid #ccc' }}
-          >
-            <Box sx={{ display: 'flex' }}>
-              <Typography sx={{ p: 1.5, mr: 6 }} variant="h6" component="div">
-                배터리3
-              </Typography>
-              <Divider orientation="vertical" />
-              <Typography sx={{ p: 1.5 }} variant="h7" component="div">
-                10
-              </Typography>
-            </Box>
-            <Button
-              variant="outlined"
-              sx={{ minWidth: '150px', maxHeight: '40px', marginTop: '8px' }}
-            >
-              내부보기
-            </Button>
-          </Stack>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            sx={{ padding: '0 12px' }}
-          >
-            <Box sx={{ display: 'flex' }}>
-              <Typography sx={{ p: 1.5, mr: 6 }} variant="h6" component="div">
-                배터리4
-              </Typography>
-              <Divider orientation="vertical" />
-              <Typography sx={{ p: 1.5 }} variant="h7" component="div">
-                10
-              </Typography>
-            </Box>
-            <Button
-              variant="outlined"
-              sx={{ minWidth: '150px', maxHeight: '40px', marginTop: '8px' }}
-            >
-              내부보기
-            </Button>
-          </Stack>
+              <Box sx={{ display: 'flex' }}>
+                <Typography sx={{ p: 1.5, mr: 6 }} variant="h7" component="div">
+                  {battery.label}
+                </Typography>
+                <Divider orientation="vertical" />
+                <Typography sx={{ p: 1.5 }} variant="h7" component="div">
+                  {battery.value}
+                </Typography>
+              </Box>
+              <Button
+                variant="outlined"
+                sx={{ minWidth: '150px', maxHeight: '40px', marginTop: '4px' }}
+              >
+                내부보기
+              </Button>
+            </Stack>
+          ))}
         </CardContent>
       </Card>
+
+      <TableContainer sx={{ mt: 4 }} component={Paper}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              {columns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  align="left"
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {batteryInfo.map((battery) => (
+              <TableRow hover role="checkbox" tabIndex={-1} key={battery.label}>
+                {columns.map((column) => (
+                  <TableCell key={column.id} align="left">
+                    {battery.batteryState[column.id]}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Box>
   )
 }

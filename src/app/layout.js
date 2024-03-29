@@ -5,6 +5,7 @@ import theme from '../theme'
 import Sidebar from './components/Sidebar'
 import { Stack } from '@mui/material'
 import Header from './components/Header'
+import { BatteryContextProvider } from './context/BatteryContext'
 
 export const metadata = {
   title: 'Park Project',
@@ -17,12 +18,14 @@ export default function RootLayout({ children }) {
       <body>
         <AppRouterCacheProvider options={{ key: 'css' }}>
           <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Header />
-            <Stack sx={{ marginTop: '130px' }} direction="row" spacing={4}>
-              <Sidebar />
-              {children}
-            </Stack>
+            <BatteryContextProvider>
+              <CssBaseline />
+              <Header />
+              <Stack sx={{ marginTop: '130px' }} direction="row" spacing={4}>
+                <Sidebar />
+                {children}
+              </Stack>
+            </BatteryContextProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
