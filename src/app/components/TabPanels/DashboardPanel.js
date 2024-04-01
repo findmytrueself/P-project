@@ -18,10 +18,12 @@ import React from 'react'
 import { useBatteryContext } from '../../context/BatteryContext'
 
 const columns = [
-  { id: 'label', label: '배터리 상태', minWidth: 170 },
-  { id: 'a', label: 'a', minWidth: 100 },
-  { id: 'b', label: 'b', minWidth: 100 },
-  { id: 'c', label: 'c', minWidth: 100 },
+  { id: 'label', label: '배터리', minWidth: 170 },
+  { id: '전압', label: '전압', minWidth: 100 },
+  { id: '온도', label: '온도', minWidth: 100 },
+  { id: '저항', label: '저항', minWidth: 100 },
+  { id: 'SOC', label: 'SOC', minWidth: 100 },
+  { id: 'SOH', label: 'SOH', minWidth: 100 },
 ]
 
 const DashboardPanel = () => {
@@ -75,6 +77,11 @@ const DashboardPanel = () => {
       <TableContainer sx={{ mt: 4 }} component={Paper}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
+            <TableRow>
+              <TableCell colSpan={columns.length} align="left">
+                배터리 상태
+              </TableCell>
+            </TableRow>
             <TableRow>
               {columns.map((column) => (
                 <TableCell

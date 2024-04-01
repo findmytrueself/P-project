@@ -4,13 +4,23 @@ import {
   CardContent,
   Typography,
   Stack,
-  Button,
   Divider,
-  ToggleButtonGroup,
-  ToggleButton,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Paper,
 } from '@mui/material'
 import React from 'react'
 import { useBatteryContext } from '../../context/BatteryContext'
+
+const columns = [
+  { id: '순번', label: '순번', minWidth: 100 },
+  { id: '발생시각', label: '발생시각', minWidth: 170 },
+  { id: '구분', label: '구분', minWidth: 100 },
+]
 
 const AlarmPanel = () => {
   const { batteryInfo, setBatteryInfo } = useBatteryContext()
@@ -61,94 +71,54 @@ const AlarmPanel = () => {
                   {battery.value}
                 </Typography>
               </Box>
-              <Box sx={{ display: 'flex' }}>
-                <Button
-                  variant="outlined"
-                  sx={{
-                    minWidth: '150px',
-                    maxHeight: '40px',
-                    marginTop: '4px',
-                  }}
-                >
-                  팝업 표시
-                </Button>
-                <ToggleButtonGroup
-                  sx={{ marginLeft: '10px' }}
-                  color="primary"
-                  value={battery.onOff}
-                  exclusive
-                  onChange={(e) => handleOnOff(battery.label, e.target.value)}
-                  aria-label="배터리1"
-                >
-                  <ToggleButton
-                    value="on"
-                    sx={{
-                      minWidth: '100px',
-                      maxHeight: '40px',
-                      marginTop: '4px',
-                    }}
-                  >
-                    ON
-                  </ToggleButton>
-                  <ToggleButton
-                    value="off"
-                    sx={{
-                      minWidth: '100px',
-                      maxHeight: '40px',
-                      marginTop: '4px',
-                    }}
-                  >
-                    OFF
-                  </ToggleButton>
-                </ToggleButtonGroup>
-              </Box>
             </Stack>
           ))}
         </CardContent>
       </Card>
 
       {batteryInfo.map((battery) => (
-        <Card
-          sx={{
-            mt: 4,
-            p: 0,
-            boxShadow: 'none',
-            border: '1px solid #ccc',
-            '& .MuiCardContent-root:last-child': {
-              paddingBottom: 0,
-            },
-          }}
-        >
-          <CardContent sx={{ p: 0 }}>
-            <Box sx={{ padding: '0 12px', borderBottom: '1px solid #ccc' }}>
-              <Typography sx={{ p: 1.5 }} variant="h7" component="div">
-                {`${battery.label} 알람이력`}
-              </Typography>
-            </Box>
-            {battery.alarmHistory.map((alarmHistory, idx) => (
-              <Stack
-                key={battery.label}
-                direction="row"
-                justifyContent="space-between"
-                sx={{ padding: '0 12px', borderBottom: '1px solid #ccc' }}
-              >
-                <Box sx={{ display: 'flex' }}>
-                  <Typography
-                    sx={{ p: 1.5, mr: 6 }}
-                    variant="h7"
-                    component="div"
+        <TableContainer sx={{ mt: 4 }} component={Paper}>
+          <Table
+            key={battery.label}
+            stickyHeader
+            aria-label={`${battery.label} 알람이력`}
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell colSpan={columns.length} align="left">
+                  {`${battery.label} 알람이력`}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align="left"
+                    style={{ minWidth: column.minWidth }}
                   >
-                    {`#${idx}`}
-                  </Typography>
-                  <Divider orientation="vertical" />
-                  <Typography sx={{ p: 1.5 }} variant="h7" component="div">
-                    {alarmHistory.timestamp}
-                  </Typography>
-                </Box>
-              </Stack>
-            ))}
-          </CardContent>
-        </Card>
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
+              {battery.alarmHistory.map((history) => (
+                <TableRow
+                  hover
+                  role="checkbox"
+                  tabIndex={-1}
+                  key={battery.label}
+                >
+                  {columns.map((column) => (
+                    <TableCell>{history[column.id]}</TableCell>
+                  ))}
+                  {console.log(history, 'history')}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       ))}
     </Box>
   )
