@@ -18,12 +18,12 @@ import React from 'react'
 import { useBatteryContext } from '../../context/BatteryContext'
 
 const columns = [
-  { id: 'label', label: '배터리', minWidth: 170 },
-  { id: '전압', label: '전압', minWidth: 100 },
-  { id: '온도', label: '온도', minWidth: 100 },
-  { id: '저항', label: '저항', minWidth: 100 },
-  { id: 'SOC', label: 'SOC', minWidth: 100 },
-  { id: 'SOH', label: 'SOH', minWidth: 100 },
+  { id: 'batteryNumber', label: '배터리', minWidth: 170 },
+  { id: 'avrVoltage', label: '전압', minWidth: 100 },
+  { id: 'avrTemperature', label: '온도', minWidth: 100 },
+  { id: 'avrResistance', label: '저항', minWidth: 100 },
+  { id: 'soc', label: 'SOC', minWidth: 100 },
+  { id: 'soh', label: 'SOH', minWidth: 100 },
 ]
 
 const DashboardPanel = () => {
@@ -35,31 +35,67 @@ const DashboardPanel = () => {
         sx={{
           p: 0,
           boxShadow: 'none',
-          border: '1px solid #ccc',
+          border: '1px solid rgba(224, 224, 224, 1)',
           '& .MuiCardContent-root:last-child': {
             paddingBottom: 0,
           },
         }}
       >
         <CardContent sx={{ p: 0 }}>
-          <Box sx={{ padding: '0 12px', borderBottom: '1px solid #ccc' }}>
-            <Typography sx={{ p: 1.5 }} variant="h7" component="div">
+          <Box
+            sx={{
+              padding: '0 12px',
+              borderBottom: '1px solid rgba(224, 224, 224, 1)',
+            }}
+          >
+            <Typography
+              sx={{
+                p: 1,
+                fontWeight: 500,
+                fontSize: '0.875rem',
+                lineHeight: '1.5rem',
+              }}
+              variant="h7"
+              component="div"
+            >
               총 알람상태
             </Typography>
           </Box>
           {batteryInfo.map((battery) => (
             <Stack
-              key={battery.label}
+              key={battery.batteryNumber}
               direction="row"
               justifyContent="space-between"
-              sx={{ padding: '0 12px', borderBottom: '1px solid #ccc' }}
+              sx={{
+                padding: '0 12px',
+                borderBottom: '1px solid rgba(224, 224, 224, 1)',
+              }}
             >
               <Box sx={{ display: 'flex' }}>
-                <Typography sx={{ p: 1.5, mr: 6 }} variant="h7" component="div">
-                  {battery.label}
+                <Typography
+                  sx={{
+                    p: 1,
+                    mr: 6,
+                    fontWeight: 500,
+                    fontSize: '0.875rem',
+                    lineHeight: '2rem',
+                  }}
+                  variant="h7"
+                  component="div"
+                >
+                  {battery.batteryNumber}
                 </Typography>
                 <Divider orientation="vertical" />
-                <Typography sx={{ p: 1.5 }} variant="h7" component="div">
+                <Typography
+                  sx={{
+                    p: 1,
+                    fontWeight: 400,
+                    fontSize: '0.875rem',
+                    lineHeight: '2rem',
+                  }}
+                  variant="h7"
+                  component="div"
+                >
                   {battery.value}
                 </Typography>
               </Box>
@@ -96,10 +132,15 @@ const DashboardPanel = () => {
           </TableHead>
           <TableBody>
             {batteryInfo.map((battery) => (
-              <TableRow hover role="checkbox" tabIndex={-1} key={battery.label}>
+              <TableRow
+                hover
+                role="checkbox"
+                tabIndex={-1}
+                key={battery.batteryNumber}
+              >
                 {columns.map((column) => (
                   <TableCell key={column.id} align="left">
-                    {battery.batteryState[column.id]}
+                    {battery[column.id]}
                   </TableCell>
                 ))}
               </TableRow>
