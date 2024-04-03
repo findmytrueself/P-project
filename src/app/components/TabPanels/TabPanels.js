@@ -6,7 +6,7 @@ import MeasurementPanel from './MeasurementPanel'
 
 const TabPanels = ({ tab }) => {
   return (
-    <Box sx={{ border: '1px solid #ccc' }}>
+    <Box sx={{ border: '1px solid rgba(224, 224, 224, 1)' }}>
       {tab === 0 ? <DashboardPanel /> : null}
       {tab === 1 ? <AlarmPanel /> : null}
       {tab === 2 ? <MeasurementPanel /> : null}

@@ -28,7 +28,7 @@ const MeasurementPanel = () => {
       >
         <Tab
           sx={{
-            border: '1px solid #ccc',
+            border: '1px solid rgba(224, 224, 224, 1)',
             minWidth: '150px',
             minHeight: '40px',
           }}
@@ -37,7 +37,7 @@ const MeasurementPanel = () => {
         />
         <Tab
           sx={{
-            border: '1px solid #ccc',
+            border: '1px solid rgba(224, 224, 224, 1)',
             minWidth: '150px',
             minHeight: '40px',
           }}
@@ -46,7 +46,7 @@ const MeasurementPanel = () => {
         />
         <Tab
           sx={{
-            border: '1px solid #ccc',
+            border: '1px solid rgba(224, 224, 224, 1)',
             minWidth: '150px',
             minHeight: '40px',
           }}
@@ -63,10 +63,10 @@ const MeasurementPanel = () => {
         >
           {batteryInfo.map((battery) => (
             <FormControlLabel
-              key={battery.label}
-              value={battery.label}
+              key={battery.batteryNumber}
+              value={battery.batteryNumber}
               control={<Radio />}
-              label={battery.label}
+              label={battery.batteryNumber}
             />
           ))}
         </RadioGroup>

@@ -42,32 +42,68 @@ const AlarmPanel = () => {
         sx={{
           p: 0,
           boxShadow: 'none',
-          border: '1px solid #ccc',
+          border: '1px solid rgba(224, 224, 224, 1)',
           '& .MuiCardContent-root:last-child': {
             paddingBottom: 0,
           },
         }}
       >
         <CardContent sx={{ p: 0 }}>
-          <Box sx={{ padding: '0 12px', borderBottom: '1px solid #ccc' }}>
-            <Typography sx={{ p: 1.5 }} variant="h7" component="div">
+          <Box
+            sx={{
+              padding: '0 12px',
+              borderBottom: '1px solid rgba(224, 224, 224, 1)',
+            }}
+          >
+            <Typography
+              sx={{
+                p: 1,
+                fontWeight: 500,
+                fontSize: '0.875rem',
+                lineHeight: '1.5rem',
+              }}
+              variant="h7"
+              component="div"
+            >
               총 알람상태
             </Typography>
           </Box>
 
           {batteryInfo.map((battery) => (
             <Stack
-              key={battery.label}
+              key={battery.batteryNumber}
               direction="row"
               justifyContent="space-between"
-              sx={{ padding: '0 12px', borderBottom: '1px solid #ccc' }}
+              sx={{
+                padding: '0 12px',
+                borderBottom: '1px solid rgba(224, 224, 224, 1)',
+              }}
             >
               <Box sx={{ display: 'flex' }}>
-                <Typography sx={{ p: 1.5, mr: 6 }} variant="h7" component="div">
-                  {battery.label}
+                <Typography
+                  sx={{
+                    p: 1,
+                    mr: 6,
+                    fontWeight: 500,
+                    fontSize: '0.875rem',
+                    lineHeight: '2rem',
+                  }}
+                  variant="h7"
+                  component="div"
+                >
+                  {battery.batteryNumber}
                 </Typography>
                 <Divider orientation="vertical" />
-                <Typography sx={{ p: 1.5 }} variant="h7" component="div">
+                <Typography
+                  sx={{
+                    p: 1,
+                    fontWeight: 400,
+                    fontSize: '0.875rem',
+                    lineHeight: '2rem',
+                  }}
+                  variant="h7"
+                  component="div"
+                >
                   {battery.value}
                 </Typography>
               </Box>
@@ -79,14 +115,14 @@ const AlarmPanel = () => {
       {batteryInfo.map((battery) => (
         <TableContainer sx={{ mt: 4 }} component={Paper}>
           <Table
-            key={battery.label}
+            key={battery.batteryNumber}
             stickyHeader
-            aria-label={`${battery.label} 알람이력`}
+            aria-label={`${battery.batteryNumber} 알람이력`}
           >
             <TableHead>
               <TableRow>
                 <TableCell colSpan={columns.length} align="left">
-                  {`${battery.label} 알람이력`}
+                  {`${battery.batteryNumber} 알람이력`}
                 </TableCell>
               </TableRow>
               <TableRow>

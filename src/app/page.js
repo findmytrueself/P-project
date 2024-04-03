@@ -19,16 +19,16 @@ export default function Home() {
       >
         <Tab
           sx={{
-            border: '1px solid #ccc',
+            border: '1px solid rgba(224, 224, 224, 1)',
             minWidth: '150px',
             minHeight: '40px',
           }}
-          label="대시보드"
+          label="대시보드"
           value={0}
         />
         <Tab
           sx={{
-            border: '1px solid #ccc',
+            border: '1px solid rgba(224, 224, 224, 1)',
             minWidth: '150px',
             minHeight: '40px',
           }}
@@ -37,7 +37,7 @@ export default function Home() {
         />
         <Tab
           sx={{
-            border: '1px solid #ccc',
+            border: '1px solid rgba(224, 224, 224, 1)',
             minWidth: '150px',
             minHeight: '40px',
           }}
