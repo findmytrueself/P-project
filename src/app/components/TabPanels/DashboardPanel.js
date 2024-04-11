@@ -19,15 +19,15 @@ import { useBatteryContext } from '../../context/BatteryContext'
 
 const columns = [
   { id: 'batteryNumber', label: '배터리', minWidth: 170 },
-  { id: 'avrVoltage', label: '전압', minWidth: 100 },
-  { id: 'avrTemperature', label: '온도', minWidth: 100 },
-  { id: 'avrResistance', label: '저항', minWidth: 100 },
+  { id: 'voltage', label: '전압', minWidth: 100 },
+  { id: 'temperature', label: '온도', minWidth: 100 },
+  { id: 'resistance', label: '저항', minWidth: 100 },
   { id: 'soc', label: 'SOC', minWidth: 100 },
   { id: 'soh', label: 'SOH', minWidth: 100 },
 ]
 
 const DashboardPanel = () => {
-  const { batteryInfo } = useBatteryContext()
+  const { batteryStatus } = useBatteryContext()
 
   return (
     <Box sx={{ p: '16px' }}>
@@ -61,56 +61,83 @@ const DashboardPanel = () => {
               총 알람상태
             </Typography>
           </Box>
-          {batteryInfo.map((battery) => (
-            <Stack
-              key={battery.batteryNumber}
-              direction="row"
-              justifyContent="space-between"
+          {batteryStatus &&
+          batteryStatus?.batteryMeasures &&
+          Object.values(batteryStatus?.alarmSummaries).length > 0 ? (
+            Object.values(batteryStatus?.alarmSummaries).map((alarm) => (
+              <Stack
+                key={alarm.batteryNumber}
+                direction="row"
+                justifyContent="space-between"
+                sx={{
+                  padding: '0 12px',
+                  borderBottom: '1px solid rgba(224, 224, 224, 1)',
+                }}
+              >
+                <Box sx={{ display: 'flex' }}>
+                  <Typography
+                    sx={{
+                      p: 1,
+                      mr: 6,
+                      fontWeight: 400,
+                      fontSize: '0.875rem',
+                      lineHeight: '2rem',
+                    }}
+                    variant="h7"
+                    component="div"
+                  >
+                    {alarm.batteryNumber}
+                  </Typography>
+                  <Divider orientation="vertical" />
+                  <Typography
+                    sx={{
+                      p: 1,
+                      fontWeight: 400,
+                      fontSize: '0.875rem',
+                      lineHeight: '2rem',
+                    }}
+                    variant="h7"
+                    component="div"
+                  >
+                    {alarm.alarmCount}
+                  </Typography>
+                </Box>
+                <Button
+                  variant="outlined"
+                  sx={{
+                    minWidth: '150px',
+                    maxHeight: '40px',
+                    marginTop: '4px',
+                  }}
+                >
+                  내부보기
+                </Button>
+              </Stack>
+            ))
+          ) : (
+            <Typography
               sx={{
-                padding: '0 12px',
-                borderBottom: '1px solid rgba(224, 224, 224, 1)',
+                ml: 0.5,
+                p: 1.75,
+                fontWeight: 400,
+                fontSize: '0.875rem',
+                lineHeight: '1.43',
               }}
             >
-              <Box sx={{ display: 'flex' }}>
-                <Typography
-                  sx={{
-                    p: 1,
-                    mr: 6,
-                    fontWeight: 500,
-                    fontSize: '0.875rem',
-                    lineHeight: '2rem',
-                  }}
-                  variant="h7"
-                  component="div"
-                >
-                  {battery.batteryNumber}
-                </Typography>
-                <Divider orientation="vertical" />
-                <Typography
-                  sx={{
-                    p: 1,
-                    fontWeight: 400,
-                    fontSize: '0.875rem',
-                    lineHeight: '2rem',
-                  }}
-                  variant="h7"
-                  component="div"
-                >
-                  {battery.value}
-                </Typography>
-              </Box>
-              <Button
-                variant="outlined"
-                sx={{ minWidth: '150px', maxHeight: '40px', marginTop: '4px' }}
-              >
-                내부보기
-              </Button>
-            </Stack>
-          ))}
+              RRU를 선택해주세요.
+            </Typography>
+          )}
         </CardContent>
       </Card>
 
-      <TableContainer sx={{ mt: 4 }} component={Paper}>
+      <TableContainer
+        sx={{
+          mt: 4,
+          border: '1px solid rgba(224, 224, 224, 1)',
+          boxShadow: 'none',
+        }}
+        component={Paper}
+      >
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -131,20 +158,28 @@ const DashboardPanel = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {batteryInfo.map((battery) => (
-              <TableRow
-                hover
-                role="checkbox"
-                tabIndex={-1}
-                key={battery.batteryNumber}
-              >
-                {columns.map((column) => (
-                  <TableCell key={column.id} align="left">
-                    {battery[column.id]}
-                  </TableCell>
-                ))}
+            {batteryStatus &&
+            batteryStatus.batteryMeasures &&
+            Object.values(batteryStatus.batteryMeasures).length > 0 ? (
+              Object.values(batteryStatus.batteryMeasures).map((battery) => (
+                <TableRow
+                  hover
+                  role="checkbox"
+                  tabIndex={-1}
+                  key={battery.batteryNumber}
+                >
+                  {columns.map((column) => (
+                    <TableCell key={column.id} align="left">
+                      {battery[column.id]}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell>RRU를 선택해주세요.</TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </TableContainer>
