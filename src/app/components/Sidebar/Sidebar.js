@@ -4,10 +4,21 @@ import React from 'react'
 import { Box, Drawer } from '@mui/material'
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView'
 import { TreeItem } from '@mui/x-tree-view/TreeItem'
+import { useBatteryContext } from '../../context/BatteryContext'
+import { clientAxiosInstance } from '../../api/axios'
 
 const drawerWidth = 240
 
 const Sidebar = () => {
+  const { serviceStatus, setBatteryStatus } = useBatteryContext()
+  const handleChangeBatteryStatus = async (rruId) => {
+    try {
+      const getBatteryStatus = await clientAxiosInstance.get(`/rrus/${rruId}`)
+      setBatteryStatus(getBatteryStatus.data)
+    } catch (e) {
+      console.error(e, 'error')
+    }
+  }
   return (
     <Drawer
       sx={{
@@ -24,17 +35,27 @@ const Sidebar = () => {
     >
       <Box sx={{ margin: '6px' }}>
         <SimpleTreeView sx={{ marginTop: '120px' }} multiSelect>
-          <TreeItem itemId="서울정보통신사무소" label="서울정보통신사무소">
-            <TreeItem itemId="서울정보통신사무소-1" label="1번 RRU" />
-            <TreeItem itemId="서울정보통신사무소-2" label="2번 RRU" />
-          </TreeItem>
-          <TreeItem itemId="청량리" label="청량리">
-            <TreeItem itemId="청량리-1" label="1번 RRU" />
-            <TreeItem itemId="청량리-2" label="2번 RRU" />
-          </TreeItem>
-          <TreeItem itemId="의정부" label="의정부">
-            <TreeItem itemId="의정부-1" label="1번 RRU" />
-            <TreeItem itemId="의정부-2" label="2번 RRU" />
+          <TreeItem
+            key={serviceStatus.officeName}
+            itemId={serviceStatus.officeName ?? '서울정보통신사무소'}
+            label={serviceStatus.officeName ?? '서울정보통신사무소'}
+          >
+            {serviceStatus?.stationList?.map((station) => (
+              <TreeItem
+                key={`${station.stationId + station.stationName}`}
+                itemId={`${station.stationId + station.stationName}`}
+                label={station.stationName}
+              >
+                {station?.rruList?.map((rru) => (
+                  <TreeItem
+                    key={rru.rruId}
+                    itemId={rru.rruId}
+                    label={rru.rruName}
+                    onClick={() => handleChangeBatteryStatus(rru.rruId)}
+                  />
+                ))}
+              </TreeItem>
+            ))}
           </TreeItem>
         </SimpleTreeView>
       </Box>
