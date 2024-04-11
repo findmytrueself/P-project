@@ -137,7 +137,7 @@ const AlarmPanel = () => {
                 lineHeight: '1.43',
               }}
             >
-              RRU를 선택해주세요.
+              좌측의 RRU를 선택해주세요.
             </Typography>
           )}
         </CardContent>
@@ -186,7 +186,7 @@ const AlarmPanel = () => {
                       )}
                   </Select>
                   <FormHelperText>
-                    {!batteryStatus ? `RRU를 선택해주세요.` : ''}
+                    {!batteryStatus ? `좌측의 RRU를 선택해주세요.` : ''}
                   </FormHelperText>
                 </FormControl>
               </TableCell>

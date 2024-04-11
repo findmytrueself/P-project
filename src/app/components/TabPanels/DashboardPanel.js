@@ -124,7 +124,7 @@ const DashboardPanel = () => {
                 lineHeight: '1.43',
               }}
             >
-              RRU를 선택해주세요.
+              좌측의 RRU를 선택해주세요.
             </Typography>
           )}
         </CardContent>
@@ -177,7 +177,7 @@ const DashboardPanel = () => {
               ))
             ) : (
               <TableRow>
-                <TableCell>RRU를 선택해주세요.</TableCell>
+                <TableCell>좌측의 RRU를 선택해주세요.</TableCell>
               </TableRow>
             )}
           </TableBody>

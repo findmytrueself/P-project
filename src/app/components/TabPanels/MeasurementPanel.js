@@ -155,7 +155,7 @@ const MeasurementPanel = () => {
                 lineHeight: '1.43',
               }}
             >
-              RRU를 선택해주세요.
+              좌측의 RRU를 선택해주세요.
             </Typography>
           )}
         </RadioGroup>
@@ -232,7 +232,18 @@ const MeasurementPanel = () => {
               ]}
               {...chartSetting}
             />
-          ) : null}
+          ) : (
+            <Typography
+              sx={{
+                p: 2,
+                fontWeight: 400,
+                fontSize: '0.875rem',
+                lineHeight: '1.43',
+              }}
+            >
+              좌측의 RRU를 선택해주세요.
+            </Typography>
+          )}
         </>
       ) : null}
     </Box>
