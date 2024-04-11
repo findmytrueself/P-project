@@ -17,48 +17,48 @@ import {
   TableHead,
   TableRow,
   Paper,
-} from '@mui/material'
-import React, { useState, useEffect } from 'react'
-import { useBatteryContext } from '../../context/BatteryContext'
-import { clientAxiosInstance } from '../../api/axios'
-import { utcToKrTime } from '../../utils/utils'
+} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { useBatteryContext } from "../../context/BatteryContext";
+import { clientAxiosInstance } from "../../api/axios";
+import { utcToKrTime } from "../../utils/utils";
 
 const columns = [
-  { id: 'idx', label: '순번', minWidth: 100 },
-  { id: 'time', label: '발생시각', minWidth: 170 },
-  { id: 'message', label: '구분', minWidth: 100 },
-]
+  { id: "idx", label: "순번", minWidth: 100 },
+  { id: "time", label: "발생시각", minWidth: 170 },
+  { id: "message", label: "구분", minWidth: 100 },
+];
 
 const AlarmPanel = () => {
-  const { batteryStatus } = useBatteryContext()
-  const [alarmHistory, setAlarmHistory] = useState([])
-  const [batteryNumber, setBatteryNumber] = useState('')
+  const { batteryStatus } = useBatteryContext();
+  const [alarmHistory, setAlarmHistory] = useState([]);
+  const [batteryNumber, setBatteryNumber] = useState("");
 
   useEffect(() => {
     if (batteryStatus) {
-      const { rruId, alarmSummaries } = batteryStatus
+      const { rruId, alarmSummaries } = batteryStatus;
       const getAlarmHistory = async () => {
         try {
           const alarmHistoryData = await clientAxiosInstance.get(
             `/rrus/${rruId}/${alarmSummaries[batteryNumber].stringNumber}/${alarmSummaries[batteryNumber].batteryNumber}/alarms`
-          )
-          setAlarmHistory(alarmHistoryData.data)
+          );
+          setAlarmHistory(alarmHistoryData.data);
         } catch (e) {
-          console.error(e)
+          console.error(e);
         }
-      }
-      getAlarmHistory()
+      };
+      getAlarmHistory();
     }
-  }, [batteryStatus, batteryNumber])
+  }, [batteryStatus, batteryNumber]);
 
   return (
-    <Box sx={{ p: '16px' }}>
+    <Box sx={{ p: "16px" }}>
       <Card
         sx={{
           p: 0,
-          boxShadow: 'none',
-          border: '1px solid rgba(224, 224, 224, 1)',
-          '& .MuiCardContent-root:last-child': {
+          boxShadow: "none",
+          border: "1px solid rgba(224, 224, 224, 1)",
+          "& .MuiCardContent-root:last-child": {
             paddingBottom: 0,
           },
         }}
@@ -66,16 +66,16 @@ const AlarmPanel = () => {
         <CardContent sx={{ p: 0 }}>
           <Box
             sx={{
-              padding: '0 12px',
-              borderBottom: '1px solid rgba(224, 224, 224, 1)',
+              padding: "0 12px",
+              borderBottom: "1px solid rgba(224, 224, 224, 1)",
             }}
           >
             <Typography
               sx={{
                 p: 1,
                 fontWeight: 500,
-                fontSize: '0.875rem',
-                lineHeight: '1.5rem',
+                fontSize: "0.875rem",
+                lineHeight: "1.5rem",
               }}
               variant="h7"
               component="div"
@@ -93,18 +93,18 @@ const AlarmPanel = () => {
                 direction="row"
                 justifyContent="space-between"
                 sx={{
-                  padding: '0 12px',
-                  borderBottom: '1px solid rgba(224, 224, 224, 1)',
+                  padding: "0 12px",
+                  borderBottom: "1px solid rgba(224, 224, 224, 1)",
                 }}
               >
-                <Box sx={{ display: 'flex' }}>
+                <Box sx={{ display: "flex" }}>
                   <Typography
                     sx={{
                       p: 1,
                       mr: 6,
                       fontWeight: 400,
-                      fontSize: '0.875rem',
-                      lineHeight: '2rem',
+                      fontSize: "0.875rem",
+                      lineHeight: "2rem",
                     }}
                     variant="h7"
                     component="div"
@@ -116,8 +116,8 @@ const AlarmPanel = () => {
                     sx={{
                       p: 1,
                       fontWeight: 400,
-                      fontSize: '0.875rem',
-                      lineHeight: '2rem',
+                      fontSize: "0.875rem",
+                      lineHeight: "2rem",
                     }}
                     variant="h7"
                     component="div"
@@ -133,8 +133,8 @@ const AlarmPanel = () => {
                 ml: 0.5,
                 p: 1.75,
                 fontWeight: 400,
-                fontSize: '0.875rem',
-                lineHeight: '1.43',
+                fontSize: "0.875rem",
+                lineHeight: "1.43",
               }}
             >
               좌측의 RRU를 선택해주세요.
@@ -146,8 +146,8 @@ const AlarmPanel = () => {
       <TableContainer
         sx={{
           mt: 4,
-          border: '1px solid rgba(224, 224, 224, 1)',
-          boxShadow: 'none',
+          border: "1px solid rgba(224, 224, 224, 1)",
+          boxShadow: "none",
         }}
         component={Paper}
       >
@@ -161,7 +161,7 @@ const AlarmPanel = () => {
               <TableCell colSpan={columns.length} align="left">
                 <FormControl
                   size="small"
-                  sx={{ minWidth: 150 }}
+                  sx={{ minWidth: 160 }}
                   disabled={!batteryStatus}
                   // error={!batteryStatus}
                 >
@@ -186,7 +186,7 @@ const AlarmPanel = () => {
                       )}
                   </Select>
                   <FormHelperText>
-                    {!batteryStatus ? `좌측의 RRU를 선택해주세요.` : ''}
+                    {!batteryStatus ? `좌측의 RRU를 선택해주세요.` : ""}
                   </FormHelperText>
                 </FormControl>
               </TableCell>
@@ -211,8 +211,8 @@ const AlarmPanel = () => {
                   ml: 0.5,
                   p: 1.75,
                   fontWeight: 400,
-                  fontSize: '0.875rem',
-                  lineHeight: '1.43',
+                  fontSize: "0.875rem",
+                  lineHeight: "1.43",
                 }}
               >
                 배터리를 선택해주세요.
@@ -225,7 +225,7 @@ const AlarmPanel = () => {
                     <TableCell>
                       {!history[column.id]
                         ? idx + 1
-                        : column.id === 'time'
+                        : column.id === "time"
                         ? utcToKrTime(history[column.id])
                         : history[column.id]}
                     </TableCell>
@@ -236,7 +236,7 @@ const AlarmPanel = () => {
         </Table>
       </TableContainer>
     </Box>
-  )
-}
+  );
+};
 
-export default AlarmPanel
+export default AlarmPanel;
