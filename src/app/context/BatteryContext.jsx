@@ -1,10 +1,14 @@
 'use client'
 import React from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
+import { clientAxiosInstance } from '../api/axios'
 
 const BatteryContext = createContext({
-  battery: null,
-  setBatteryInfo: () => {},
+  serviceStatus: null,
+  batteryStatus: null,
+  setBatteryStatus: () => {},
+  alarmHistory: null,
+  setAlarmHistory: () => {},
 })
 
 export function useBatteryContext() {
@@ -12,70 +16,30 @@ export function useBatteryContext() {
 }
 
 export const BatteryContextProvider = ({ children }) => {
-  const [batteryInfo, setBatteryInfo] = useState([
-    {
-      batteryNumber: '배터리1',
-      value: 10,
-      avrVoltage: '200.86V',
-      avrTemperature: 16.2,
-      avrResistance: '0.3A',
-      soc: '0.1A',
-      soh: '0.2A',
-      alarmHistory: [
-        { 순번: 1, 발생시각: '2023-12-01 16:11:00', 구분: '전압 초과' },
-        { 순번: 2, 발생시각: '2023-12-01 16:11:00', 구분: '저항 초과' },
-        { 순번: 3, 발생시각: '2023-12-01 16:11:00', 구분: '전압 미달' },
-      ],
-    },
-    {
-      batteryNumber: '배터리2',
-      value: 5,
-      avrVoltage: '200.86V',
-      avrTemperature: 16.2,
-      avrResistance: '0.3A',
-      soc: '0.1A',
-      soh: '0.2A',
-      alarmHistory: [
-        { 순번: 1, 발생시각: '2023-12-01 16:11:00', 구분: '전압 초과' },
-        { 순번: 2, 발생시각: '2023-12-01 16:11:00', 구분: '저항 초과' },
-        { 순번: 3, 발생시각: '2023-12-01 16:11:00', 구분: '전압 미달' },
-      ],
-    },
-    {
-      batteryNumber: '배터리3',
-      value: 10,
-      avrVoltage: '200.86V',
-      avrTemperature: 16.2,
-      avrResistance: '0.3A',
-      soc: '0.1A',
-      soh: '0.2A',
-      alarmHistory: [
-        { 순번: 1, 발생시각: '2023-12-01 16:11:00', 구분: '전압 초과' },
-        { 순번: 2, 발생시각: '2023-12-01 16:11:00', 구분: '저항 초과' },
-        { 순번: 3, 발생시각: '2023-12-01 16:11:00', 구분: '전압 미달' },
-      ],
-    },
-    {
-      batteryNumber: '배터리4',
-      value: 8,
-      avrVoltage: '200.86V',
-      avrTemperature: 16.2,
-      avrResistance: '0.3A',
-      soc: '0.1A',
-      soh: '0.2A',
-      alarmHistory: [
-        { 순번: 1, 발생시각: '2023-12-01 16:11:00', 구분: '전압 초과' },
-        { 순번: 2, 발생시각: '2023-12-01 16:11:00', 구분: '저항 초과' },
-        { 순번: 3, 발생시각: '2023-12-01 16:11:00', 구분: '전압 미달' },
-      ],
-    },
-  ])
+  const [serviceStatus, setServiceStatus] = useState([])
+  const [batteryStatus, setBatteryStatus] = useState(null)
+
   useEffect(() => {
-    //* battery data fetching
+    const getStatus = async () => {
+      try {
+        const res = await clientAxiosInstance.get('/status')
+        setServiceStatus(res.data)
+      } catch (e) {
+        console.error(e, '요청 실패')
+      }
+    }
+
+    getStatus()
   }, [])
 
   return (
-    <BatteryContext.Provider value={{ batteryInfo, setBatteryInfo }}>
+    <BatteryContext.Provider
+      value={{
+        serviceStatus,
+        batteryStatus,
+        setBatteryStatus,
+      }}
+    >
       {children}
     </BatteryContext.Provider>
   )
