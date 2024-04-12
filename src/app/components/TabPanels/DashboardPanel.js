@@ -13,6 +13,7 @@ import {
   TableHead,
   TableRow,
   Paper,
+  // Skeleton,
 } from '@mui/material'
 import React from 'react'
 import { useBatteryContext } from '../../context/BatteryContext'
@@ -62,8 +63,8 @@ const DashboardPanel = () => {
             </Typography>
           </Box>
           {batteryStatus &&
-          batteryStatus?.batteryMeasures &&
-          Object.values(batteryStatus?.alarmSummaries).length > 0 ? (
+            batteryStatus?.batteryMeasures &&
+            Object.values(batteryStatus?.alarmSummaries).length > 0 &&
             Object.values(batteryStatus?.alarmSummaries).map((alarm) => (
               <Stack
                 key={alarm.batteryNumber}
@@ -113,20 +114,7 @@ const DashboardPanel = () => {
                   내부보기
                 </Button>
               </Stack>
-            ))
-          ) : (
-            <Typography
-              sx={{
-                ml: 0.5,
-                p: 1.75,
-                fontWeight: 400,
-                fontSize: '0.875rem',
-                lineHeight: '1.43',
-              }}
-            >
-              좌측의 RRU를 선택해주세요.
-            </Typography>
-          )}
+            ))}
         </CardContent>
       </Card>
 
@@ -159,8 +147,8 @@ const DashboardPanel = () => {
           </TableHead>
           <TableBody>
             {batteryStatus &&
-            batteryStatus.batteryMeasures &&
-            Object.values(batteryStatus.batteryMeasures).length > 0 ? (
+              batteryStatus.batteryMeasures &&
+              Object.values(batteryStatus.batteryMeasures).length > 0 &&
               Object.values(batteryStatus.batteryMeasures).map((battery) => (
                 <TableRow
                   hover
@@ -174,12 +162,7 @@ const DashboardPanel = () => {
                     </TableCell>
                   ))}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell>좌측의 RRU를 선택해주세요.</TableCell>
-              </TableRow>
-            )}
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
