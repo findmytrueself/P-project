@@ -32,7 +32,7 @@ const columns = [
 const AlarmPanel = () => {
   const { batteryStatus } = useBatteryContext()
   const [alarmHistory, setAlarmHistory] = useState([])
-  const [batteryNumber, setBatteryNumber] = useState('')
+  const [batteryNumber, setBatteryNumber] = useState(1)
 
   useEffect(() => {
     if (batteryStatus) {
@@ -85,8 +85,8 @@ const AlarmPanel = () => {
           </Box>
 
           {batteryStatus &&
-          batteryStatus?.batteryMeasures &&
-          Object.values(batteryStatus?.alarmSummaries).length > 0 ? (
+            batteryStatus?.batteryMeasures &&
+            Object.values(batteryStatus?.alarmSummaries).length > 0 &&
             Object.values(batteryStatus?.alarmSummaries).map((alarm) => (
               <Stack
                 key={alarm.batteryNumber}
@@ -126,20 +126,7 @@ const AlarmPanel = () => {
                   </Typography>
                 </Box>
               </Stack>
-            ))
-          ) : (
-            <Typography
-              sx={{
-                ml: 0.5,
-                p: 1.75,
-                fontWeight: 400,
-                fontSize: '0.875rem',
-                lineHeight: '1.43',
-              }}
-            >
-              좌측의 RRU를 선택해주세요.
-            </Typography>
-          )}
+            ))}
         </CardContent>
       </Card>
 
