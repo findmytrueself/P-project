@@ -148,7 +148,7 @@ const AlarmPanel = () => {
               <TableCell colSpan={columns.length} align="left">
                 <FormControl
                   size="small"
-                  sx={{ minWidth: 150 }}
+                  sx={{ minWidth: 160 }}
                   disabled={!batteryStatus}
                   // error={!batteryStatus}
                 >
