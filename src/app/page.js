@@ -1,13 +1,17 @@
 'use client'
-import { Tab, Tabs, Container, Box } from '@mui/material'
+import { Tab, Tabs, Container } from '@mui/material'
 import { useState } from 'react'
+import Loading from './components/Loading'
 import TabPanels from './components/TabPanels'
+import { useBatteryContext } from './context/BatteryContext'
 
 export default function Home() {
   const [value, setValue] = useState(0)
+  const { batteryStatus } = useBatteryContext()
 
   return (
     <Container maxWidth="xl">
+      {!batteryStatus ? <Loading /> : null}
       <Tabs
         value={value}
         onChange={(e, newValue) => setValue(newValue)}
@@ -45,7 +49,6 @@ export default function Home() {
           value={2}
         />
       </Tabs>
-
       <TabPanels tab={value} />
     </Container>
   )
