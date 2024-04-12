@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Drawer } from '@mui/material'
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView'
 import { TreeItem } from '@mui/x-tree-view/TreeItem'
@@ -11,14 +11,31 @@ const drawerWidth = 240
 
 const Sidebar = () => {
   const { serviceStatus, setBatteryStatus } = useBatteryContext()
-  const handleChangeBatteryStatus = async (rruId) => {
+  const [selected, setSelected] = useState([])
+
+  const handleChangeBatteryStatus = async (rruId, isFirst) => {
     try {
       const getBatteryStatus = await clientAxiosInstance.get(`/rrus/${rruId}`)
       setBatteryStatus(getBatteryStatus.data)
+      if (!isFirst) {
+        setSelected(rruId)
+      }
     } catch (e) {
       console.error(e, 'error')
     }
   }
+
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 serviceStatus가 존재하는 경우, 첫 번째 rru의 배터리 상태를 가져옴
+    if (serviceStatus) {
+      const firstRruId = serviceStatus?.stationList?.[0]?.rruList?.[0]?.rruId
+      if (firstRruId) {
+        handleChangeBatteryStatus(firstRruId, true)
+        setSelected(firstRruId)
+      }
+    }
+  }, [serviceStatus]) // serviceStatus가 변경될 때마다 useEffect 실행
+
   return (
     <Drawer
       sx={{
@@ -34,7 +51,12 @@ const Sidebar = () => {
       anchor="left"
     >
       <Box sx={{ margin: '6px' }}>
-        <SimpleTreeView sx={{ marginTop: '120px' }} multiSelect>
+        <SimpleTreeView
+          sx={{ marginTop: '120px' }}
+          multiSelect
+          defaultExpandedItems={['서울정보통신사무소', '청량리']}
+          selectedItems={selected}
+        >
           <TreeItem
             key={serviceStatus.officeName}
             itemId={serviceStatus.officeName ?? '서울정보통신사무소'}
@@ -42,8 +64,8 @@ const Sidebar = () => {
           >
             {serviceStatus?.stationList?.map((station) => (
               <TreeItem
-                key={`${station.stationId + station.stationName}`}
-                itemId={`${station.stationId + station.stationName}`}
+                key={`${station.stationName}`}
+                itemId={`${station.stationName}`}
                 label={station.stationName}
               >
                 {station?.rruList?.map((rru) => (
@@ -51,7 +73,7 @@ const Sidebar = () => {
                     key={rru.rruId}
                     itemId={rru.rruId}
                     label={rru.rruName}
-                    onClick={() => handleChangeBatteryStatus(rru.rruId)}
+                    onClick={() => handleChangeBatteryStatus(rru.rruId, false)}
                   />
                 ))}
               </TreeItem>
