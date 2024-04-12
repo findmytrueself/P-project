@@ -6,40 +6,32 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Typography,
 } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { useBatteryContext } from '../../context/BatteryContext'
-import { BarChart } from '@mui/x-charts'
 import { clientAxiosInstance } from '../../api/axios'
+import { utcToKrTime } from '../../utils/utils'
+import List from './MeasurementTabs/List'
+// import Graph from './MeasurementTabs/Graph'
+import { BarChart } from '@mui/x-charts'
 
-const getTab2ChartKey = (tab2Value) => {
-  switch (tab2Value) {
-    case 0:
-      return { key: 'voltage', label: '전압(V)', color: '#4e79a7' }
-    case 1:
-      return { key: 'temperature', label: '온도(°C)', color: '#f28e2c' }
-    case 2:
-      return { key: 'resistance', label: '저항(mΩ)', color: '#e15759' }
-    case 3:
-      return { key: 'soc', label: 'SOC(%)', color: '#76b7b2' }
-    case 4:
-      return { key: 'soh', label: 'SOH(%)', color: '#59a14f' }
-    default:
-  }
-}
+const timeFormatter = (utc) => `${utcToKrTime(utc)}`
+const valueFormatter = (value, format) => `${value}${format}`
 
 const MeasurementPanel = () => {
+  const { batteryStatus } = useBatteryContext()
   const [tab1, setTab1] = useState(0)
+
   const [tab2, setTab2] = useState(0)
+  const [batteryNumber, setBatteryNumber] = useState(1)
+  const [batteryHistory, setBatteryHistory] = useState([])
   const [convertedTab2, setConvertedTab2] = useState({
     key: '',
     label: '',
     color: '',
+    time: '',
+    format: '',
   })
-  const { batteryStatus } = useBatteryContext()
-  const [batteryNumber, setBatteryNumber] = useState(1)
-  const [batteryHistory, setBatteryHistory] = useState([])
   const [chartSetting, setChartSetting] = useState({})
 
   useEffect(() => {
@@ -61,30 +53,80 @@ const MeasurementPanel = () => {
     }
   }, [batteryStatus, batteryNumber])
 
-  useEffect(() => {
-    if (batteryStatus) {
-      setChartSetting({
-        yAxis: [
-          {
-            label: `배터리${batteryNumber} ${convertedTab2.label} 그래프`,
-          },
-        ],
-        series: [
-          {
-            dataKey: convertedTab2.key,
-            label: convertedTab2.label,
-            color: convertedTab2.color,
-          },
-        ],
-        height: 300,
-      })
+  const getTab2ChartKey = useCallback((tab2Value) => {
+    switch (tab2Value) {
+      case 0:
+        return {
+          key: 'voltage',
+          label: '전압(V)',
+          format: 'V',
+          color: '#4e79a7',
+          time: 'measuredAt',
+        }
+      case 1:
+        return {
+          key: 'temperature',
+          label: '온도(°C)',
+          format: '°C',
+          color: '#f28e2c',
+          time: 'measuredAt',
+        }
+      case 2:
+        return {
+          key: 'resistance',
+          label: '저항(mΩ)',
+          format: 'mΩ',
+          color: '#e15759',
+          time: 'measuredAt',
+        }
+      case 3:
+        return {
+          key: 'soc',
+          label: 'SOC(%)',
+          format: '%',
+          color: '#76b7b2',
+          time: 'measuredAt',
+        }
+      case 4:
+        return {
+          key: 'soh',
+          label: 'SOH(%)',
+          format: '%',
+          color: '#59a14f',
+          time: 'measuredAt',
+        }
+      default:
     }
-  }, [batteryStatus, batteryHistory, batteryNumber, convertedTab2])
+  }, [])
+
+  useEffect(() => {
+    setConvertedTab2(getTab2ChartKey(tab2))
+  }, [tab2])
 
   useEffect(() => {
     const chartKey = getTab2ChartKey(tab2)
-    setConvertedTab2(chartKey)
-  }, [tab2])
+
+    const newChartSetting = {
+      axisHighlight: { x: 'none' },
+      yAxis: [
+        {
+          label: `배터리${batteryNumber} ${chartKey.label} 그래프`,
+        },
+      ],
+      series: [
+        {
+          dataKey: chartKey.key,
+          label: chartKey.label,
+          color: chartKey.color,
+          valueFormatter: (value) => valueFormatter(value, chartKey.format),
+        },
+      ],
+      height: 300,
+    }
+
+    // chartSetting 상태를 업데이트
+    setChartSetting(newChartSetting)
+  }, [tab2, batteryNumber])
 
   return (
     <Box sx={{ pt: '16px' }}>
@@ -134,8 +176,8 @@ const MeasurementPanel = () => {
           defaultValue={1}
         >
           {batteryStatus &&
-          batteryStatus.batteryMeasures &&
-          Object.values(batteryStatus.batteryMeasures).length > 0 ? (
+            batteryStatus.batteryMeasures &&
+            Object.values(batteryStatus.batteryMeasures).length > 0 &&
             Object.values(batteryStatus.batteryMeasures).map((battery) => (
               <FormControlLabel
                 key={battery.batteryNumber}
@@ -145,23 +187,11 @@ const MeasurementPanel = () => {
                 onChange={(e) => setBatteryNumber(e.target.value)}
                 disabled={!batteryStatus}
               />
-            ))
-          ) : (
-            <Typography
-              sx={{
-                p: 1,
-                fontWeight: 400,
-                fontSize: '0.875rem',
-                lineHeight: '1.43',
-              }}
-            >
-              좌측의 RRU를 선택해주세요.
-            </Typography>
-          )}
+            ))}
         </RadioGroup>
       </FormControl>
 
-      {tab1 === 0 ? (
+      {tab1 === 0 && (
         <>
           <Tabs
             value={tab2}
@@ -219,33 +249,32 @@ const MeasurementPanel = () => {
               value={4}
             />
           </Tabs>
-          {batteryHistory.length > 0 ? (
+          {batteryHistory.length > 0 && (
             <BarChart
               dataset={batteryHistory}
               xAxis={[
                 {
                   scaleType: 'band',
-                  dataKey: convertedTab2.key,
+                  dataKey: convertedTab2.time,
+                  valueFormatter: timeFormatter,
                   tickPlacement: 'middle',
                   tickLabelPlacement: 'middle',
                 },
               ]}
               {...chartSetting}
             />
-          ) : (
-            <Typography
-              sx={{
-                p: 2,
-                fontWeight: 400,
-                fontSize: '0.875rem',
-                lineHeight: '1.43',
-              }}
-            >
-              좌측의 RRU를 선택해주세요.
-            </Typography>
           )}
         </>
-      ) : null}
+        // <Graph
+        //   tab1={tab1}
+        //   batteryHistory={batteryHistory}
+        //   batteryNumber={batteryNumber}
+        // />
+      )}
+
+      {tab1 === 1 && batteryHistory.length > 0 && (
+        <List batteryHistory={batteryHistory} />
+      )}
     </Box>
   )
 }
