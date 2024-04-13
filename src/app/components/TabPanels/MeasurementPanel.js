@@ -55,7 +55,7 @@ const MeasurementPanel = () => {
       };
       getbatteryMeasureList();
     }
-  }, [batteryStatus, batteryNumber]);
+  }, [batteryStatus, batteryNumber, isMobile]);
 
   const getTab2ChartKey = useCallback((tab2Value) => {
     switch (tab2Value) {
