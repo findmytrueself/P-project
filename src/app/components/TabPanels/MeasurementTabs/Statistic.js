@@ -158,7 +158,7 @@ const Statistic = ({ batteryStatus, batteryNumber }) => {
                 <Typography
                   sx={{
                     p: 1,
-                    mr: {row.avg.mr},
+                    mr: row.avg.mr,
                     fontWeight: 400,
                     fontSize: "0.875rem",
                     lineHeight: "2rem",
