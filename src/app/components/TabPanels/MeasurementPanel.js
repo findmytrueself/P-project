@@ -210,7 +210,7 @@ const MeasurementPanel = () => {
             <Tab
               sx={{
                 border: "1px solid rgba(224, 224, 224, 1)",
-                minWidth: "100px",
+                minWidth: isMobile ? "80px" : "100px",
                 minHeight: "40px",
               }}
               label="전압(V)"
@@ -219,7 +219,7 @@ const MeasurementPanel = () => {
             <Tab
               sx={{
                 border: "1px solid rgba(224, 224, 224, 1)",
-                minWidth: "100px",
+                minWidth: isMobile ? "80px" : "100px",
                 minHeight: "40px",
               }}
               label="온도(°C)"
@@ -228,7 +228,7 @@ const MeasurementPanel = () => {
             <Tab
               sx={{
                 border: "1px solid rgba(224, 224, 224, 1)",
-                minWidth: "100px",
+                minWidth: isMobile ? "80px" : "100px",
                 minHeight: "40px",
                 textTransform: "none",
               }}
@@ -238,7 +238,7 @@ const MeasurementPanel = () => {
             <Tab
               sx={{
                 border: "1px solid rgba(224, 224, 224, 1)",
-                minWidth: "100px",
+                minWidth: isMobile ? "80px" : "100px",
                 minHeight: "40px",
               }}
               label="SOC(%)"
@@ -247,7 +247,7 @@ const MeasurementPanel = () => {
             <Tab
               sx={{
                 border: "1px solid rgba(224, 224, 224, 1)",
-                minWidth: "100px",
+                minWidth: isMobile ? "80px" : "100px",
                 minHeight: "40px",
               }}
               label="SOH(%)"
