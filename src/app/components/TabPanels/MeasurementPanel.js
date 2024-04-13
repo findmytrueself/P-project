@@ -20,7 +20,7 @@ import { BarChart } from "@mui/x-charts";
 
 const MeasurementPanel = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
   const { batteryStatus } = useBatteryContext();
   const [tab1, setTab1] = useState(0);
 
