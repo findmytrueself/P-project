@@ -7,7 +7,8 @@ import {
   FormControlLabel,
   Radio,
 } from "@mui/material";
-import { useTheme } from "@mui/system";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import React, { useEffect, useState, useCallback } from "react";
 import { useBatteryContext } from "../../context/BatteryContext";
 import { clientAxiosInstance } from "../../api/axios";
@@ -19,7 +20,7 @@ import { BarChart } from "@mui/x-charts";
 
 const MeasurementPanel = () => {
   const theme = useTheme();
-  const isMobile = theme.breakpoints.down("sm");
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { batteryStatus } = useBatteryContext();
   const [tab1, setTab1] = useState(0);
 
