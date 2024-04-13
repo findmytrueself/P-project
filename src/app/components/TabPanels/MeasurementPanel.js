@@ -11,8 +11,9 @@ import React, { useEffect, useState, useCallback } from 'react'
 import { useBatteryContext } from '../../context/BatteryContext'
 import { clientAxiosInstance } from '../../api/axios'
 import { utcToKrTime } from '../../utils/utils'
-import List from './MeasurementTabs/List'
 // import Graph from './MeasurementTabs/Graph'
+import List from './MeasurementTabs/List'
+import Statistic from './MeasurementTabs/Statistic'
 import { BarChart } from '@mui/x-charts'
 
 const timeFormatter = (utc) => `${utcToKrTime(utc)}`
@@ -121,7 +122,7 @@ const MeasurementPanel = () => {
           valueFormatter: (value) => valueFormatter(value, chartKey.format),
         },
       ],
-      height: 300,
+      height: 480,
     }
 
     // chartSetting 상태를 업데이트
@@ -274,6 +275,13 @@ const MeasurementPanel = () => {
 
       {tab1 === 1 && batteryHistory.length > 0 && (
         <List batteryHistory={batteryHistory} />
+      )}
+
+      {tab1 === 2 && batteryHistory.length > 0 && (
+        <Statistic
+          batteryStatus={batteryStatus}
+          batteryNumber={batteryNumber}
+        />
       )}
     </Box>
   )
