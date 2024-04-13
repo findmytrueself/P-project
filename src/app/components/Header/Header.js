@@ -116,7 +116,7 @@ const Header = () => {
           {/* The inside of the drawer */}
           <Box
             sx={{
-              p: 2,
+              p: 1,
               height: 1,
             }}
           >
@@ -127,7 +127,7 @@ const Header = () => {
 
             <Divider sx={{ mb: 2 }} />
 
-            <Box sx={{ margin: 2 }}>
+            <Box sx={{ margin: 1 }}>
               <SimpleTreeView
                 multiSelect
                 defaultExpandedItems={["서울정보통신사무소", "청량리"]}
