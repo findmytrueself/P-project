@@ -5,10 +5,16 @@ import { clientAxiosInstance } from '../api/axios'
 
 const BatteryContext = createContext({
   serviceStatus: null,
+  office: null,
+  setOffice: () => {},
+  station: null,
+  setStation: () => {},
+  rru: null,
+  setRru: () => {},
+  rruInfo: null,
+  setRruInfo: () => {},
   batteryStatus: null,
   setBatteryStatus: () => {},
-  alarmHistory: null,
-  setAlarmHistory: () => {},
 })
 
 export function useBatteryContext() {
@@ -17,6 +23,10 @@ export function useBatteryContext() {
 
 export const BatteryContextProvider = ({ children }) => {
   const [serviceStatus, setServiceStatus] = useState([])
+  const [office, setOffice] = useState(null)
+  const [station, setStation] = useState(null)
+  const [rru, setRru] = useState(null)
+  const [rruInfo, setRruInfo] = useState(null)
   const [batteryStatus, setBatteryStatus] = useState(null)
 
   useEffect(() => {
@@ -28,7 +38,6 @@ export const BatteryContextProvider = ({ children }) => {
         console.error(e, '요청 실패')
       }
     }
-
     getStatus()
   }, [])
 
@@ -36,6 +45,14 @@ export const BatteryContextProvider = ({ children }) => {
     <BatteryContext.Provider
       value={{
         serviceStatus,
+        office,
+        setOffice,
+        station,
+        setStation,
+        rru,
+        setRru,
+        rruInfo,
+        setRruInfo,
         batteryStatus,
         setBatteryStatus,
       }}

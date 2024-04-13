@@ -8,8 +8,6 @@ import { useBatteryContext } from '../../context/BatteryContext'
 export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
   const { rruInfo } = useBatteryContext()
   const handleClose = () => setOpen(false)
-  console.log(rruInfo, 'rruInfo')
-  console.log(batteryMeasure, 'batteryMeasure')
 
   return (
     <Modal
@@ -21,10 +19,37 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
     >
       <ModalContent sx={{ width: 400 }}>
         <h2 id="unstyled-modal-title" className="modal-title">
-          Text in a modal
+          {`배터리${batteryMeasure.batteryNumber} 내부보기`}
         </h2>
         <p id="unstyled-modal-description" className="modal-description">
-          Aliquid amet deserunt earum!
+          {`alarmLight: ${batteryMeasure.alarmLight}`}
+        </p>
+        <p id="unstyled-modal-description" className="modal-description">
+          {`communicationStatus: ${batteryMeasure.communicationStatus}`}
+        </p>
+        <p id="unstyled-modal-description" className="modal-description">
+          {`alarmInfo: ${batteryMeasure.alarmInfo}`}
+        </p>
+        <p id="unstyled-modal-description" className="modal-description">
+          {`camera1Url: ${rruInfo.camera1Url}`}
+        </p>
+        <p id="unstyled-modal-description" className="modal-description">
+          {`camera2Url: ${rruInfo.camera2Url}`}
+        </p>
+        <p id="unstyled-modal-description" className="modal-description">
+          {`camera3Url: ${rruInfo.camera3Url}`}
+        </p>
+        <p id="unstyled-modal-description" className="modal-description">
+          {`cameraStatus: ${rruInfo.cameraStatus}`}
+        </p>
+        <p id="unstyled-modal-description" className="modal-description">
+          {`hostAddress: ${rruInfo.hostAddress}`}
+        </p>
+        <p id="unstyled-modal-description" className="modal-description">
+          {`hostPort: ${rruInfo.hostPort}`}
+        </p>
+        <p id="unstyled-modal-description" className="modal-description">
+          {`ledControl: ${rruInfo.ledControl}`}
         </p>
       </ModalContent>
     </Modal>

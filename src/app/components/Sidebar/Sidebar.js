@@ -1,24 +1,41 @@
 'use client'
-
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Box, Drawer } from '@mui/material'
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView'
 import { TreeItem } from '@mui/x-tree-view/TreeItem'
 import { useBatteryContext } from '../../context/BatteryContext'
 import { clientAxiosInstance } from '../../api/axios'
 
-const drawerWidth = 240
-
 const Sidebar = () => {
-  const { serviceStatus, setBatteryStatus } = useBatteryContext()
-  const [selected, setSelected] = useState([])
+  const {
+    serviceStatus,
+    setBatteryStatus,
+    setOffice,
+    station,
+    setStation,
+    rru,
+    setRru,
+    setRruInfo,
+  } = useBatteryContext()
 
   const handleChangeBatteryStatus = async (rruId, isFirst) => {
     try {
       const getBatteryStatus = await clientAxiosInstance.get(`/rrus/${rruId}`)
       setBatteryStatus(getBatteryStatus.data)
       if (!isFirst) {
-        setSelected(rruId)
+        const rruInfo = serviceStatus?.stationList?.flatMap((stationEl) => {
+          if (stationEl.stationName === station) {
+            return stationEl.rruList.find((rruEl) => {
+              if (rruEl.rruId === rruId) {
+                return true
+              }
+              return false
+            })
+          }
+          return []
+        })
+        setRru(rruId)
+        setRruInfo(rruInfo[0])
       }
     } catch (e) {
       console.error(e, 'error')
@@ -26,15 +43,17 @@ const Sidebar = () => {
   }
 
   useEffect(() => {
-    // 컴포넌트가 마운트될 때 serviceStatus가 존재하는 경우, 첫 번째 rru의 배터리 상태를 가져옴
     if (serviceStatus) {
       const firstRruId = serviceStatus?.stationList?.[0]?.rruList?.[0]?.rruId
       if (firstRruId) {
         handleChangeBatteryStatus(firstRruId, true)
-        setSelected(firstRruId)
+        setOffice(serviceStatus.officeName)
+        setStation(serviceStatus?.stationList?.[0].stationName)
+        setRru(firstRruId)
+        setRruInfo(serviceStatus?.stationList?.[0]?.rruList?.[0])
       }
     }
-  }, [serviceStatus]) // serviceStatus가 변경될 때마다 useEffect 실행
+  }, [serviceStatus])
 
   return (
     <Drawer
@@ -55,18 +74,20 @@ const Sidebar = () => {
           sx={{ marginTop: '120px' }}
           multiSelect
           defaultExpandedItems={['서울정보통신사무소', '청량리']}
-          selectedItems={selected}
+          selectedItems={rru}
         >
           <TreeItem
             key={serviceStatus.officeName}
             itemId={serviceStatus.officeName ?? '서울정보통신사무소'}
             label={serviceStatus.officeName ?? '서울정보통신사무소'}
+            onClick={() => setOffice(serviceStatus.officeName)}
           >
             {serviceStatus?.stationList?.map((station) => (
               <TreeItem
                 key={`${station.stationName}`}
                 itemId={`${station.stationName}`}
                 label={station.stationName}
+                onClick={() => setStation(station.stationName)}
               >
                 {station?.rruList?.map((rru) => (
                   <TreeItem
@@ -86,3 +107,5 @@ const Sidebar = () => {
 }
 
 export default Sidebar
+
+const drawerWidth = 240
