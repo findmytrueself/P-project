@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import {
   AppBar,
@@ -8,15 +8,15 @@ import {
   Drawer,
   Box,
   Divider,
-} from '@mui/material'
-import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView'
-import { TreeItem } from '@mui/x-tree-view/TreeItem'
-import MenuIcon from '@mui/icons-material/Menu'
-import CloseIcon from '@mui/icons-material/Close'
-import React, { useState } from 'react'
-import Image from 'next/image'
-import { useBatteryContext } from '../../context/BatteryContext'
-import { clientAxiosInstance } from '../../api/axios'
+} from "@mui/material";
+import { SimpleTreeView } from "@mui/x-tree-view/SimpleTreeView";
+import { TreeItem } from "@mui/x-tree-view/TreeItem";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
+import React, { useState } from "react";
+import Image from "next/image";
+import { useBatteryContext } from "../../context/BatteryContext";
+import { clientAxiosInstance } from "../../api/axios";
 
 const Header = () => {
   const {
@@ -27,54 +27,54 @@ const Header = () => {
     setBatteryStatus,
     setRru,
     setRruInfo,
-  } = useBatteryContext()
-  const [open, setState] = useState(false)
-  console.log(open, 'open')
+  } = useBatteryContext();
+  const [open, setState] = useState(false);
+
   const toggleDrawer = (open) => (event) => {
     if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
     ) {
-      return
+      return;
     }
     //changes the function state according to the value of open
-    setState(open)
-  }
+    setState(open);
+  };
 
   const handleChangeBatteryStatus = async (rruId, isFirst) => {
     try {
-      const getBatteryStatus = await clientAxiosInstance.get(`/rrus/${rruId}`)
-      setBatteryStatus(getBatteryStatus.data)
+      const getBatteryStatus = await clientAxiosInstance.get(`/rrus/${rruId}`);
+      setBatteryStatus(getBatteryStatus.data);
       if (!isFirst) {
         const rruInfo = serviceStatus?.stationList?.flatMap((stationEl) => {
           if (stationEl.stationName === station) {
             return stationEl.rruList.find((rruEl) => {
               if (rruEl.rruId === rruId) {
-                return true
+                return true;
               }
-              return false
-            })
+              return false;
+            });
           }
-          return []
-        })
-        setRru(rruId)
-        setRruInfo(rruInfo[0])
-        setState(false)
+          return [];
+        });
+        setRru(rruId);
+        setRruInfo(rruInfo[0]);
+        setState(false);
       }
     } catch (e) {
-      console.error(e, 'error')
+      console.error(e, "error");
     }
-  }
+  };
 
   return (
     <AppBar
       position="fixed"
       sx={{
-        borderBottom: '1px solid rgba(224, 224, 224, 1)',
-        background: '#fff',
-        color: '#000',
-        boxShadow: 'none',
-        p: '12px',
+        borderBottom: "1px solid rgba(224, 224, 224, 1)",
+        background: "#fff",
+        color: "#000",
+        boxShadow: "none",
+        p: "12px",
       }}
     >
       <Toolbar>
@@ -82,7 +82,7 @@ const Header = () => {
           src="/arloo.png"
           width={80}
           height={80}
-          style={{ marginRight: '24px' }}
+          style={{ marginRight: "24px" }}
         />
         <Typography variant="h4" noWrap sx={{ fontWeight: 600 }}>
           배터리 모니터링
@@ -95,8 +95,8 @@ const Header = () => {
           sx={{
             ml: 1,
             display: {
-              xs: 'block',
-              sm: 'none',
+              xs: "block",
+              sm: "none",
             },
           }}
         >
@@ -130,13 +130,13 @@ const Header = () => {
             <Box sx={{ margin: 2 }}>
               <SimpleTreeView
                 multiSelect
-                defaultExpandedItems={['서울정보통신사무소', '청량리']}
+                defaultExpandedItems={["서울정보통신사무소", "청량리"]}
                 selectedItems={rru}
               >
                 <TreeItem
                   key={serviceStatus.officeName}
-                  itemId={serviceStatus.officeName ?? '서울정보통신사무소'}
-                  label={serviceStatus.officeName ?? '서울정보통신사무소'}
+                  itemId={serviceStatus.officeName ?? "서울정보통신사무소"}
+                  label={serviceStatus.officeName ?? "서울정보통신사무소"}
                   onClick={() => setOffice(serviceStatus.officeName)}
                 >
                   {serviceStatus?.stationList?.map((station) => (
@@ -165,7 +165,7 @@ const Header = () => {
         </Drawer>
       </Toolbar>
     </AppBar>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
