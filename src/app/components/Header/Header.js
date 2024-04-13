@@ -25,6 +25,7 @@ const Header = () => {
   const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
   const {
     serviceStatus,
+    setOffice,
     station,
     setStation,
     rru,
