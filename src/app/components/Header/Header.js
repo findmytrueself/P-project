@@ -17,8 +17,12 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useBatteryContext } from "../../context/BatteryContext";
 import { clientAxiosInstance } from "../../api/axios";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const Header = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
   const {
     serviceStatus,
     station,
@@ -77,7 +81,7 @@ const Header = () => {
         p: "12px",
       }}
     >
-      <Toolbar>
+      <Toolbar sx={isMobile && { justifyContent: "space-between" }}>
         <Image
           src="/arloo.png"
           width={80}
