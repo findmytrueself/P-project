@@ -1,20 +1,18 @@
 export const utcToKrTime = (utc) => {
-  const utcDate = new Date(utc)
-  const koreaOffset = 9 * 60
-  const koreaDate = new Date(utcDate.getTime() + koreaOffset * 60 * 1000)
+  const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+  const kr_curr = new Date(utc + KR_TIME_DIFF);
 
   const options = {
-    year: '2-digit',
-    month: '2-digit',
-    day: '2-digit',
-    hour: 'numeric',
-    minute: 'numeric',
+    year: "2-digit",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "numeric",
+    minute: "numeric",
     hour12: true,
-    hourCycle: 'h12',
-  }
+  };
 
-  return koreaDate
-    .toLocaleString('en-US', options)
-    .replace(',', '')
-    .replace(/\//g, '.')
-}
+  const formattedDate = kr_curr.toLocaleDateString("en-US", options);
+  const formattedTime = kr_curr.toLocaleTimeString("en-US", options);
+
+  return `${formattedDate} ${formattedTime}`;
+};
