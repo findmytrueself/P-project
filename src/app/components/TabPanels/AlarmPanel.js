@@ -23,12 +23,6 @@ import { useBatteryContext } from '../../context/BatteryContext'
 import { clientAxiosInstance } from '../../api/axios'
 import { utcToKrTime } from '../../utils/utils'
 
-const columns = [
-  { id: 'idx', label: '순번', minWidth: 100 },
-  { id: 'time', label: '발생시각', minWidth: 170 },
-  { id: 'message', label: '구분', minWidth: 100 },
-]
-
 const AlarmPanel = () => {
   const { batteryStatus } = useBatteryContext()
   const [alarmHistory, setAlarmHistory] = useState([])
@@ -227,3 +221,9 @@ const AlarmPanel = () => {
 }
 
 export default AlarmPanel
+
+const columns = [
+  { id: 'idx', label: '순번', minWidth: 100 },
+  { id: 'time', label: '발생시각', minWidth: 170 },
+  { id: 'message', label: '구분', minWidth: 100 },
+]

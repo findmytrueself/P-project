@@ -16,9 +16,6 @@ import List from './MeasurementTabs/List'
 import Statistic from './MeasurementTabs/Statistic'
 import { BarChart } from '@mui/x-charts'
 
-const timeFormatter = (utc) => `${utcToKrTime(utc)}`
-const valueFormatter = (value, format) => `${value}${format}`
-
 const MeasurementPanel = () => {
   const { batteryStatus } = useBatteryContext()
   const [tab1, setTab1] = useState(0)
@@ -288,3 +285,6 @@ const MeasurementPanel = () => {
 }
 
 export default MeasurementPanel
+
+const timeFormatter = (utc) => `${utcToKrTime(utc)}`
+const valueFormatter = (value, format) => `${value}${format}`

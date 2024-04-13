@@ -15,23 +15,30 @@ import {
   Paper,
   // Skeleton,
 } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import { useBatteryContext } from '../../context/BatteryContext'
-
-const columns = [
-  { id: 'batteryNumber', label: '배터리', minWidth: 170 },
-  { id: 'voltage', label: '전압(V)', minWidth: 100 },
-  { id: 'temperature', label: '온도(°C)', minWidth: 100 },
-  { id: 'resistance', label: '저항(mΩ)', minWidth: 100 },
-  { id: 'soc', label: 'SOC(%)', minWidth: 100 },
-  { id: 'soh', label: 'SOH(%)', minWidth: 100 },
-]
+import BatteryInsideModal from '../BatteryInsideModal'
 
 const DashboardPanel = () => {
   const { batteryStatus } = useBatteryContext()
+  const [open, setOpen] = useState(false)
+  const [batteryMeasure, setBatteryMeasure] = useState({})
+
+  const handleClickInsideModal = (batteryNumber) => {
+    setOpen(true)
+    setBatteryMeasure(batteryStatus.batteryMeasures[batteryNumber])
+  }
 
   return (
     <Box sx={{ p: '16px' }}>
+      {open ? (
+        <BatteryInsideModal
+          open={open}
+          setOpen={setOpen}
+          batteryMeasure={batteryMeasure}
+        />
+      ) : null}
+
       <Card
         sx={{
           p: 0,
@@ -110,6 +117,7 @@ const DashboardPanel = () => {
                     maxHeight: '40px',
                     marginTop: '4px',
                   }}
+                  onClick={() => handleClickInsideModal(alarm.batteryNumber)}
                 >
                   내부보기
                 </Button>
@@ -171,3 +179,12 @@ const DashboardPanel = () => {
 }
 
 export default DashboardPanel
+
+const columns = [
+  { id: 'batteryNumber', label: '배터리', minWidth: 170 },
+  { id: 'voltage', label: '전압(V)', minWidth: 100 },
+  { id: 'temperature', label: '온도(°C)', minWidth: 100 },
+  { id: 'resistance', label: '저항(mΩ)', minWidth: 100 },
+  { id: 'soc', label: 'SOC(%)', minWidth: 100 },
+  { id: 'soh', label: 'SOH(%)', minWidth: 100 },
+]
