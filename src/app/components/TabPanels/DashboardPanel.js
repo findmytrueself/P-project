@@ -20,11 +20,11 @@ import { useBatteryContext } from '../../context/BatteryContext'
 
 const columns = [
   { id: 'batteryNumber', label: '배터리', minWidth: 170 },
-  { id: 'voltage', label: '전압', minWidth: 100 },
-  { id: 'temperature', label: '온도', minWidth: 100 },
-  { id: 'resistance', label: '저항', minWidth: 100 },
-  { id: 'soc', label: 'SOC', minWidth: 100 },
-  { id: 'soh', label: 'SOH', minWidth: 100 },
+  { id: 'voltage', label: '전압(V)', minWidth: 100 },
+  { id: 'temperature', label: '온도(°C)', minWidth: 100 },
+  { id: 'resistance', label: '저항(mΩ)', minWidth: 100 },
+  { id: 'soc', label: 'SOC(%)', minWidth: 100 },
+  { id: 'soh', label: 'SOH(%)', minWidth: 100 },
 ]
 
 const DashboardPanel = () => {
@@ -87,7 +87,7 @@ const DashboardPanel = () => {
                     variant="h7"
                     component="div"
                   >
-                    {alarm.batteryNumber}
+                    {`배터리${alarm.batteryNumber}`}
                   </Typography>
                   <Divider orientation="vertical" />
                   <Typography
