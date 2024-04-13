@@ -11,11 +11,11 @@ import React from 'react'
 
 const columns = [
   { id: 'idx', label: '순번', minWidth: 100 },
-  { id: 'voltage', label: '전압', minWidth: 100 },
-  { id: 'temperature', label: '온도', minWidth: 100 },
-  { id: 'resistance', label: '저항', minWidth: 100 },
-  { id: 'soc', label: 'SOC', minWidth: 100 },
-  { id: 'soh', label: 'SOH', minWidth: 100 },
+  { id: 'voltage', label: '전압(V)', minWidth: 100 },
+  { id: 'temperature', label: '온도(°C)', minWidth: 100 },
+  { id: 'resistance', label: '저항(mΩ)', minWidth: 100 },
+  { id: 'soc', label: 'SOC(%)', minWidth: 100 },
+  { id: 'soh', label: 'SOH(%)', minWidth: 100 },
 ]
 
 const List = ({ batteryHistory }) => {
@@ -47,7 +47,7 @@ const List = ({ batteryHistory }) => {
               <TableRow hover role="checkbox" tabIndex={-1} key={idx}>
                 {columns.map((column) => (
                   <TableCell key={column.id} align="left">
-                    {!history[column.id] ? idx + 1 : history[column.id]}
+                    {!history[column.id] ? `#${idx + 1}` : history[column.id]}
                   </TableCell>
                 ))}
               </TableRow>
