@@ -157,7 +157,8 @@ const Statistic = ({ batteryStatus, batteryNumber }) => {
               <Box sx={{ display: "flex" }}>
                 <Typography
                   sx={{
-                    p: row.avg.p,
+                    p: 1,
+                    pr: row.avg.pr,
                     mr: 7.5,
                     fontWeight: 400,
                     fontSize: "0.875rem",
@@ -201,19 +202,19 @@ const cardArray = [
     label: "전압(V)",
     min: { key: "minVoltage", label: "최소값" },
     max: { key: "maxVoltage", label: "최대값" },
-    avg: { key: "avrVoltage", label: "평균", p: 1.125 },
+    avg: { key: "avrVoltage", label: "평균", pr: 0.125 },
   },
   {
     label: "온도(°C)",
     min: { key: "minTemperature", label: "최소값" },
     max: { key: "maxTemperature", label: "최대값" },
-    avg: { key: "avrTemperature", label: "평균", p: 1.125 },
+    avg: { key: "avrTemperature", label: "평균", pr: 0.125 },
   },
   {
     label: "저항(mΩ)",
     min: { key: "minResistance", label: "최소값" },
     max: { key: "maxResistance", label: "최대값" },
-    avg: { key: "avrResistance", label: "평균", p: 1.125 },
+    avg: { key: "avrResistance", label: "평균", pr: 0.125 },
   },
 
   {
