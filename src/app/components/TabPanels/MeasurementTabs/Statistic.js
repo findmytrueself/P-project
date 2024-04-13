@@ -158,8 +158,7 @@ const Statistic = ({ batteryStatus, batteryNumber }) => {
                 <Typography
                   sx={{
                     p: 1,
-                    pr: row.avg.pr,
-                    mr: 7.5,
+                    mr: {row.avg.mr},
                     fontWeight: 400,
                     fontSize: "0.875rem",
                     lineHeight: "2rem",
@@ -202,31 +201,31 @@ const cardArray = [
     label: "전압(V)",
     min: { key: "minVoltage", label: "최소값" },
     max: { key: "maxVoltage", label: "최대값" },
-    avg: { key: "avrVoltage", label: "평균", pr: 0.125 },
+    avg: { key: "avrVoltage", label: "평균", mr: 7.625 },
   },
   {
     label: "온도(°C)",
     min: { key: "minTemperature", label: "최소값" },
     max: { key: "maxTemperature", label: "최대값" },
-    avg: { key: "avrTemperature", label: "평균", pr: 0.125 },
+    avg: { key: "avrTemperature", label: "평균", mr: 7.625 },
   },
   {
     label: "저항(mΩ)",
     min: { key: "minResistance", label: "최소값" },
     max: { key: "maxResistance", label: "최대값" },
-    avg: { key: "avrResistance", label: "평균", pr: 0.125 },
+    avg: { key: "avrResistance", label: "평균", mr: 7.625 },
   },
 
   {
     label: "SOC(%)",
     min: { key: "minSoc", label: "최소값" },
     max: { key: "maxSoc", label: "최대값" },
-    avg: { key: "avrSoc", label: "평균", p: 1.125 },
+    avg: { key: "avrSoc", label: "평균", mr: 7.625 },
   },
   {
     label: "SOH(%)",
     min: { key: "minSoh", label: "최소값" },
     max: { key: "maxSoh", label: "최대값" },
-    avg: { key: "avrSoh", label: "평균", p: 1.125 },
+    avg: { key: "avrSoh", label: "평균", mr: 7.625 },
   },
 ];
