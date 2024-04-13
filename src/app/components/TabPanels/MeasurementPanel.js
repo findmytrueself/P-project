@@ -140,7 +140,7 @@ const MeasurementPanel = () => {
         <Tab
           sx={{
             border: '1px solid rgba(224, 224, 224, 1)',
-            minWidth: '150px',
+            minWidth: '120px',
             minHeight: '40px',
           }}
           label="그래프"
@@ -149,7 +149,7 @@ const MeasurementPanel = () => {
         <Tab
           sx={{
             border: '1px solid rgba(224, 224, 224, 1)',
-            minWidth: '150px',
+            minWidth: '120px',
             minHeight: '40px',
           }}
           label="리스트"
@@ -158,7 +158,7 @@ const MeasurementPanel = () => {
         <Tab
           sx={{
             border: '1px solid rgba(224, 224, 224, 1)',
-            minWidth: '150px',
+            minWidth: '120px',
             minHeight: '40px',
           }}
           label="통계"
@@ -192,6 +192,7 @@ const MeasurementPanel = () => {
       {tab1 === 0 && (
         <>
           <Tabs
+            sx={{ overflowX: 'auto' }}
             value={tab2}
             onChange={(e, newValue) => setTab2(newValue)}
             TabIndicatorProps={{
@@ -203,7 +204,7 @@ const MeasurementPanel = () => {
             <Tab
               sx={{
                 border: '1px solid rgba(224, 224, 224, 1)',
-                minWidth: '150px',
+                minWidth: '120px',
                 minHeight: '40px',
               }}
               label="전압(V)"
@@ -212,7 +213,7 @@ const MeasurementPanel = () => {
             <Tab
               sx={{
                 border: '1px solid rgba(224, 224, 224, 1)',
-                minWidth: '150px',
+                minWidth: '120px',
                 minHeight: '40px',
               }}
               label="온도(°C)"
@@ -221,7 +222,7 @@ const MeasurementPanel = () => {
             <Tab
               sx={{
                 border: '1px solid rgba(224, 224, 224, 1)',
-                minWidth: '150px',
+                minWidth: '120px',
                 minHeight: '40px',
                 textTransform: 'none',
               }}

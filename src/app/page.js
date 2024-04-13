@@ -24,7 +24,7 @@ export default function Home() {
         <Tab
           sx={{
             border: '1px solid rgba(224, 224, 224, 1)',
-            minWidth: '150px',
+            minWidth: '120px',
             minHeight: '40px',
           }}
           label="대시보드"
@@ -33,7 +33,7 @@ export default function Home() {
         <Tab
           sx={{
             border: '1px solid rgba(224, 224, 224, 1)',
-            minWidth: '150px',
+            minWidth: '120px',
             minHeight: '40px',
           }}
           label="알람"
@@ -42,7 +42,7 @@ export default function Home() {
         <Tab
           sx={{
             border: '1px solid rgba(224, 224, 224, 1)',
-            minWidth: '150px',
+            minWidth: '120px',
             minHeight: '40px',
           }}
           label="측정"

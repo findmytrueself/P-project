@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
             <BatteryContextProvider>
               <CssBaseline />
               <Header />
-              <Stack sx={{ marginTop: '130px' }} direction="row" spacing={4}>
+              <Stack sx={{ marginTop: '130px' }} direction="row">
                 <Sidebar />
                 {children}
               </Stack>
