@@ -109,7 +109,7 @@ const AlarmPanel = () => {
                     variant="h7"
                     component="div"
                   >
-                    {alarm.batteryNumber}
+                    {`배터리${alarm.batteryNumber}`}
                   </Typography>
                   <Divider orientation="vertical" />
                   <Typography
@@ -211,7 +211,7 @@ const AlarmPanel = () => {
                   {columns.map((column) => (
                     <TableCell>
                       {!history[column.id]
-                        ? idx + 1
+                        ? `#${idx + 1}`
                         : column.id === 'time'
                         ? utcToKrTime(history[column.id])
                         : history[column.id]}
