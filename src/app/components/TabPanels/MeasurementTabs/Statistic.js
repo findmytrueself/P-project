@@ -16,33 +16,27 @@ const Statistic = ({ batteryStatus, batteryNumber }) => {
     const fetchData = () => {
       if (batteryStatus) {
         const { rruId, batteryMeasures } = batteryStatus;
-        const getbatteryMeasureList = async () => {
+        const getbatteryStats = async () => {
           try {
-            let url = `/rrus/${rruId}/${
-              batteryMeasures[batteryNumber].stringNumber ?? 1
-            }/${batteryMeasures[batteryNumber].batteryNumber}/list`;
-            if (isMobile) {
-              url += "?limit=8";
-            }
-            const batteryMeasureData = await clientAxiosInstance.get(url);
-            setBatteryHistory(batteryMeasureData.data.list);
+            const batteryStatsData = await clientAxiosInstance.get(
+              `/rrus/${rruId}/${
+                batteryMeasures[batteryNumber].stringNumber ?? 1
+              }/${batteryMeasures[batteryNumber].batteryNumber}/stats`
+            );
+            setStat(batteryStatsData.data.stat);
           } catch (e) {
             console.error(e);
           }
         };
-        getbatteryMeasureList();
+        getbatteryStats();
       }
     };
-
-    // Initial call
+    // 초기 호출
     fetchData();
 
-    // Execute fetchData every 30 seconds
+    // 10초마다 호출
     const intervalId = setInterval(fetchData, 30000);
-
-    // Clear interval on component unmount or when dependencies change
-    return () => clearInterval(intervalId);
-  }, [batteryStatus, batteryNumber, isMobile]);
+  }, [batteryStatus, batteryNumber]);
 
   return (
     <>
