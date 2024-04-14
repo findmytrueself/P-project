@@ -171,7 +171,7 @@ const DashboardPanel = () => {
                 >
                   {columns.map((column) => (
                     <TableCell key={column.id} align="left">
-                      {column.id === "communicationState" ? (
+                      {column.id === "communicationStatus" ? (
                         <CircleIcon
                           color={battery[column.id] ? "success" : "error"}
                         />
