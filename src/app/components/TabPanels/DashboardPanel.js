@@ -193,7 +193,7 @@ const DashboardPanel = () => {
 export default DashboardPanel;
 
 const columns = [
-  { id: "batteryNumber", label: "배터리", minWidth: 50 },
+  { id: "batteryNumber", label: "배터리", minWidth: 80 },
   { id: "communicationStatus", label: "연결상태", minWidth: 100 },
   { id: "voltage", label: "전압(V)", minWidth: 100 },
   { id: "temperature", label: "온도(°C)", minWidth: 100 },
