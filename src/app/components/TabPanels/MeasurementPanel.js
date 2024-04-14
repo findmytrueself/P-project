@@ -37,24 +37,35 @@ const MeasurementPanel = () => {
   const [chartSetting, setChartSetting] = useState({});
 
   useEffect(() => {
-    if (batteryStatus) {
-      const { rruId, batteryMeasures } = batteryStatus;
-      const getbatteryMeasureList = async () => {
-        try {
-          let url = `/rrus/${rruId}/${
-            batteryMeasures[batteryNumber].stringNumber ?? 1
-          }/${batteryMeasures[batteryNumber].batteryNumber}/list`;
-          if (isMobile) {
-            url += "?limit=8";
+    const fetchData = () => {
+      if (batteryStatus) {
+        const { rruId, batteryMeasures } = batteryStatus;
+        const getbatteryMeasureList = async () => {
+          try {
+            let url = `/rrus/${rruId}/${
+              batteryMeasures[batteryNumber].stringNumber ?? 1
+            }/${batteryMeasures[batteryNumber].batteryNumber}/list`;
+            if (isMobile) {
+              url += "?limit=8";
+            }
+            const batteryMeasureData = await clientAxiosInstance.get(url);
+            setBatteryHistory(batteryMeasureData.data.list);
+          } catch (e) {
+            console.error(e);
           }
-          const batteryMeasureData = await clientAxiosInstance.get(url);
-          setBatteryHistory(batteryMeasureData.data.list);
-        } catch (e) {
-          console.error(e);
-        }
-      };
-      getbatteryMeasureList();
-    }
+        };
+        getbatteryMeasureList();
+      }
+    };
+
+    // 초기 호출
+    fetchData();
+
+    // 10초마다 호출
+    const intervalId = setInterval(fetchData, 10000);
+
+    // 컴포넌트가 언마운트될 때 clearInterval로 인터벌 제거
+    return () => clearInterval(intervalId);
   }, [batteryStatus, batteryNumber, isMobile]);
 
   const getTab2ChartKey = useCallback((tab2Value) => {
