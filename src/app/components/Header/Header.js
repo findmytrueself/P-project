@@ -87,7 +87,7 @@ const Header = () => {
           src="/arloo.png"
           width={80}
           height={80}
-          style={{ marginRight: "24px" }}
+          style={isMobile ? { marginRight: "12px" } : { marginRight: "24px" }}
         />
         <Typography variant="h4" noWrap sx={{ fontWeight: 600 }}>
           배터리 모니터링
