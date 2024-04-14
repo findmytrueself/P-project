@@ -20,6 +20,7 @@ import { useBatteryContext } from "../../context/BatteryContext";
 import BatteryInsideModal from "../BatteryInsideModal";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import CircleIcon from "@mui/icons-material/Circle";
 
 const DashboardPanel = () => {
   const theme = useTheme();
@@ -170,7 +171,13 @@ const DashboardPanel = () => {
                 >
                   {columns.map((column) => (
                     <TableCell key={column.id} align="left">
-                      {battery[column.id]}
+                      {column.id === "communicationState" ? (
+                        <CircleIcon
+                          color={battery[column.id] ? "success" : "error"}
+                        />
+                      ) : (
+                        battery[column.id]
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -186,6 +193,7 @@ export default DashboardPanel;
 
 const columns = [
   { id: "batteryNumber", label: "배터리", minWidth: 170 },
+  { id: "communicationStatus", label: "연결상태", minWidth: 100 },
   { id: "voltage", label: "전압(V)", minWidth: 100 },
   { id: "temperature", label: "온도(°C)", minWidth: 100 },
   { id: "resistance", label: "저항(mΩ)", minWidth: 100 },
