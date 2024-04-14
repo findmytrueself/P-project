@@ -62,7 +62,7 @@ const MeasurementPanel = () => {
     fetchData();
 
     // 10초마다 호출
-    const intervalId = setInterval(fetchData, 10000);
+    const intervalId = setInterval(fetchData, 30000);
 
     // 컴포넌트가 언마운트될 때 clearInterval로 인터벌 제거
     return () => clearInterval(intervalId);

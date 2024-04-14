@@ -13,23 +13,36 @@ const Statistic = ({ batteryStatus, batteryNumber }) => {
   const [stat, setStat] = useState([]);
 
   useEffect(() => {
-    if (batteryStatus) {
-      const { rruId, batteryMeasures } = batteryStatus;
-      const getbatteryStats = async () => {
-        try {
-          const batteryStatsData = await clientAxiosInstance.get(
-            `/rrus/${rruId}/${
+    const fetchData = () => {
+      if (batteryStatus) {
+        const { rruId, batteryMeasures } = batteryStatus;
+        const getbatteryMeasureList = async () => {
+          try {
+            let url = `/rrus/${rruId}/${
               batteryMeasures[batteryNumber].stringNumber ?? 1
-            }/${batteryMeasures[batteryNumber].batteryNumber}/stats`
-          );
-          setStat(batteryStatsData.data.stat);
-        } catch (e) {
-          console.error(e);
-        }
-      };
-      getbatteryStats();
-    }
-  }, [batteryStatus, batteryNumber]);
+            }/${batteryMeasures[batteryNumber].batteryNumber}/list`;
+            if (isMobile) {
+              url += "?limit=8";
+            }
+            const batteryMeasureData = await clientAxiosInstance.get(url);
+            setBatteryHistory(batteryMeasureData.data.list);
+          } catch (e) {
+            console.error(e);
+          }
+        };
+        getbatteryMeasureList();
+      }
+    };
+
+    // Initial call
+    fetchData();
+
+    // Execute fetchData every 30 seconds
+    const intervalId = setInterval(fetchData, 30000);
+
+    // Clear interval on component unmount or when dependencies change
+    return () => clearInterval(intervalId);
+  }, [batteryStatus, batteryNumber, isMobile]);
 
   return (
     <>
