@@ -13,6 +13,7 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Chip,
   // Skeleton,
 } from "@mui/material";
 import React, { useState } from "react";
@@ -20,7 +21,6 @@ import { useBatteryContext } from "../../context/BatteryContext";
 import BatteryInsideModal from "../BatteryInsideModal";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import CircleIcon from "@mui/icons-material/Circle";
 
 const DashboardPanel = () => {
   const theme = useTheme();
@@ -172,7 +172,8 @@ const DashboardPanel = () => {
                   {columns.map((column) => (
                     <TableCell key={column.id} align="left">
                       {column.id === "communicationStatus" ? (
-                        <CircleIcon
+                        <Chip
+                          label={battery[column.id] ? "연결됨" : "연결끊김"}
                           color={battery[column.id] ? "success" : "error"}
                         />
                       ) : (
