@@ -23,7 +23,7 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
       onClose={handleClose}
       slots={{ backdrop: StyledBackdrop }}
     >
-      <ModalContent sx={isMobile ? { width: 300 } : { width: 450 }}>
+      <ModalContent sx={isMobile ? { width: 300 } : { width: 600 }}>
         <h2 id="unstyled-modal-title" className="modal-title">
           {`배터리${batteryMeasure.batteryNumber} 내부보기`}
         </h2>
@@ -34,8 +34,9 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
           {`ledControl: ${rruInfo.ledControl}`}
         </p>
         <p id="unstyled-modal-description" className="modal-description">
+          camera1
           <ReactPlayer
-            width={isMobile ? `250px` : `400px`}
+            width={isMobile ? `250px` : `550px`}
             height={isMobile ? `150px` : '300px'}
             url={rruInfo.camera1Url}
             controls={true}
@@ -48,8 +49,9 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
           <source src={rruInfo.camera1Url} type="video/mp4" />
         </p>
         <p id="unstyled-modal-description" className="modal-description">
+          camera2
           <ReactPlayer
-            width={isMobile ? `250px` : `400px`}
+            width={isMobile ? `250px` : `550px`}
             height={isMobile ? `150px` : '300px'}
             url={rruInfo.camera2Url}
             controls={true}
@@ -62,8 +64,9 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
           <source src={rruInfo.camera2Url} type="video/mp4" />
         </p>
         <p id="unstyled-modal-description" className="modal-description">
+          camera3
           <ReactPlayer
-            width={isMobile ? `250px` : `400px`}
+            width={isMobile ? `250px` : `550px`}
             height={isMobile ? `150px` : '300px'}
             url={rruInfo.camera3Url}
             controls={true}
