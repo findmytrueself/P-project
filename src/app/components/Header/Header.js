@@ -89,7 +89,11 @@ const Header = () => {
           height={80}
           style={isMobile ? { marginRight: '12px' } : { marginRight: '24px' }}
         />
-        <Typography variant="h4" noWrap sx={{ fontWeight: 600 }}>
+        <Typography
+          variant={isMobile ? 'h5' : 'h4'}
+          noWrap
+          sx={isMobile ? { fontWeight: 500 } : { fontWeight: 600 }}
+        >
           배터리 모니터링
         </Typography>
         <IconButton
