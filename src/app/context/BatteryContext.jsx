@@ -30,15 +30,26 @@ export const BatteryContextProvider = ({ children }) => {
   const [batteryStatus, setBatteryStatus] = useState(null)
 
   useEffect(() => {
-    const getStatus = async () => {
-      try {
-        const res = await clientAxiosInstance.get('/status')
-        setServiceStatus(res.data)
-      } catch (e) {
-        console.error(e, '요청 실패')
+    const fetchData = () => {
+      const getStatus = async () => {
+        try {
+          const res = await clientAxiosInstance.get('/status')
+          setServiceStatus(res.data)
+        } catch (e) {
+          console.error(e, '요청 실패')
+        }
       }
+      getStatus()
     }
-    getStatus()
+
+    // 초기 호출
+    fetchData()
+
+    // 10초마다 호출
+    const intervalId = setInterval(fetchData, 10000)
+
+    // 컴포넌트가 언마운트될 때 clearInterval로 인터벌 제거
+    return () => clearInterval(intervalId)
   }, [])
 
   return (

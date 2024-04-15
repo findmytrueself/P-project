@@ -5,41 +5,41 @@ import {
   Divider,
   Stack,
   Typography,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { clientAxiosInstance } from "../../../api/axios";
+} from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { clientAxiosInstance } from '../../../api/axios'
 
 const Statistic = ({ batteryStatus, batteryNumber }) => {
-  const [stat, setStat] = useState([]);
+  const [stat, setStat] = useState([])
 
   useEffect(() => {
     const fetchData = () => {
       if (batteryStatus) {
-        const { rruId, batteryMeasures } = batteryStatus;
+        const { rruId, batteryMeasures } = batteryStatus
         const getbatteryStats = async () => {
           try {
             const batteryStatsData = await clientAxiosInstance.get(
               `/rrus/${rruId}/${
                 batteryMeasures[batteryNumber].stringNumber ?? 1
               }/${batteryMeasures[batteryNumber].batteryNumber}/stats`
-            );
-            setStat(batteryStatsData.data.stat);
+            )
+            setStat(batteryStatsData.data.stat)
           } catch (e) {
-            console.error(e);
+            console.error(e)
           }
-        };
-        getbatteryStats();
+        }
+        getbatteryStats()
       }
-    };
+    }
     // 초기 호출
-    fetchData();
+    fetchData()
 
-    // 10초마다 호출
-    const intervalId = setInterval(fetchData, 30000);
+    // 30초마다 호출
+    const intervalId = setInterval(fetchData, 30000)
 
     // 컴포넌트가 언마운트될 때 clearInterval로 인터벌 제거
-    return () => clearInterval(intervalId);
-  }, [batteryStatus, batteryNumber]);
+    return () => clearInterval(intervalId)
+  }, [batteryStatus, batteryNumber])
 
   return (
     <>
@@ -49,9 +49,9 @@ const Statistic = ({ batteryStatus, batteryNumber }) => {
           sx={{
             p: 0,
             mb: 2,
-            boxShadow: "none",
-            border: "1px solid rgba(224, 224, 224, 1)",
-            "& .MuiCardContent-root:last-child": {
+            boxShadow: 'none',
+            border: '1px solid rgba(224, 224, 224, 1)',
+            '& .MuiCardContent-root:last-child': {
               paddingBottom: 0,
             },
           }}
@@ -59,16 +59,16 @@ const Statistic = ({ batteryStatus, batteryNumber }) => {
           <CardContent sx={{ p: 0 }}>
             <Box
               sx={{
-                padding: "0 12px",
-                borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                padding: '0 12px',
+                borderBottom: '1px solid rgba(224, 224, 224, 1)',
               }}
             >
               <Typography
                 sx={{
                   p: 1,
                   fontWeight: 500,
-                  fontSize: "0.875rem",
-                  lineHeight: "1.5rem",
+                  fontSize: '0.875rem',
+                  lineHeight: '1.5rem',
                 }}
                 variant="h7"
                 component="div"
@@ -82,18 +82,18 @@ const Statistic = ({ batteryStatus, batteryNumber }) => {
               direction="row"
               justifyContent="space-between"
               sx={{
-                padding: "0 12px",
-                borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                padding: '0 12px',
+                borderBottom: '1px solid rgba(224, 224, 224, 1)',
               }}
             >
-              <Box sx={{ display: "flex" }}>
+              <Box sx={{ display: 'flex' }}>
                 <Typography
                   sx={{
                     p: 1,
                     mr: 6,
                     fontWeight: 400,
-                    fontSize: "0.875rem",
-                    lineHeight: "2rem",
+                    fontSize: '0.875rem',
+                    lineHeight: '2rem',
                   }}
                   variant="h7"
                   component="div"
@@ -105,8 +105,8 @@ const Statistic = ({ batteryStatus, batteryNumber }) => {
                   sx={{
                     p: 1,
                     fontWeight: 400,
-                    fontSize: "0.875rem",
-                    lineHeight: "2rem",
+                    fontSize: '0.875rem',
+                    lineHeight: '2rem',
                   }}
                   variant="h7"
                   component="div"
@@ -121,18 +121,18 @@ const Statistic = ({ batteryStatus, batteryNumber }) => {
               direction="row"
               justifyContent="space-between"
               sx={{
-                padding: "0 12px",
-                borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                padding: '0 12px',
+                borderBottom: '1px solid rgba(224, 224, 224, 1)',
               }}
             >
-              <Box sx={{ display: "flex" }}>
+              <Box sx={{ display: 'flex' }}>
                 <Typography
                   sx={{
                     p: 1,
                     mr: 6,
                     fontWeight: 400,
-                    fontSize: "0.875rem",
-                    lineHeight: "2rem",
+                    fontSize: '0.875rem',
+                    lineHeight: '2rem',
                   }}
                   variant="h7"
                   component="div"
@@ -144,8 +144,8 @@ const Statistic = ({ batteryStatus, batteryNumber }) => {
                   sx={{
                     p: 1,
                     fontWeight: 400,
-                    fontSize: "0.875rem",
-                    lineHeight: "2rem",
+                    fontSize: '0.875rem',
+                    lineHeight: '2rem',
                   }}
                   variant="h7"
                   component="div"
@@ -160,18 +160,18 @@ const Statistic = ({ batteryStatus, batteryNumber }) => {
               direction="row"
               justifyContent="space-between"
               sx={{
-                padding: "0 12px",
-                borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                padding: '0 12px',
+                borderBottom: '1px solid rgba(224, 224, 224, 1)',
               }}
             >
-              <Box sx={{ display: "flex" }}>
+              <Box sx={{ display: 'flex' }}>
                 <Typography
                   sx={{
                     p: 1,
                     mr: row.avg.mr,
                     fontWeight: 400,
-                    fontSize: "0.875rem",
-                    lineHeight: "2rem",
+                    fontSize: '0.875rem',
+                    lineHeight: '2rem',
                   }}
                   variant="h7"
                   component="div"
@@ -183,8 +183,8 @@ const Statistic = ({ batteryStatus, batteryNumber }) => {
                   sx={{
                     p: 1,
                     fontWeight: 400,
-                    fontSize: "0.875rem",
-                    lineHeight: "2rem",
+                    fontSize: '0.875rem',
+                    lineHeight: '2rem',
                   }}
                   variant="h7"
                   component="div"
@@ -201,41 +201,41 @@ const Statistic = ({ batteryStatus, batteryNumber }) => {
         </Card>
       ))}
     </>
-  );
-};
+  )
+}
 
-export default Statistic;
+export default Statistic
 
 const cardArray = [
   {
-    label: "전압(V)",
-    min: { key: "minVoltage", label: "최소값" },
-    max: { key: "maxVoltage", label: "최대값" },
-    avg: { key: "avrVoltage", label: "평균", mr: 7.75 },
+    label: '전압(V)',
+    min: { key: 'minVoltage', label: '최소값' },
+    max: { key: 'maxVoltage', label: '최대값' },
+    avg: { key: 'avrVoltage', label: '평균', mr: 7.75 },
   },
   {
-    label: "온도(°C)",
-    min: { key: "minTemperature", label: "최소값" },
-    max: { key: "maxTemperature", label: "최대값" },
-    avg: { key: "avrTemperature", label: "평균", mr: 7.75 },
+    label: '온도(°C)',
+    min: { key: 'minTemperature', label: '최소값' },
+    max: { key: 'maxTemperature', label: '최대값' },
+    avg: { key: 'avrTemperature', label: '평균', mr: 7.75 },
   },
   {
-    label: "저항(mΩ)",
-    min: { key: "minResistance", label: "최소값" },
-    max: { key: "maxResistance", label: "최대값" },
-    avg: { key: "avrResistance", label: "평균", mr: 7.75 },
+    label: '저항(mΩ)',
+    min: { key: 'minResistance', label: '최소값' },
+    max: { key: 'maxResistance', label: '최대값' },
+    avg: { key: 'avrResistance', label: '평균', mr: 7.75 },
   },
 
   {
-    label: "SOC(%)",
-    min: { key: "minSoc", label: "최소값" },
-    max: { key: "maxSoc", label: "최대값" },
-    avg: { key: "avrSoc", label: "평균", mr: 7.75 },
+    label: 'SOC(%)',
+    min: { key: 'minSoc', label: '최소값' },
+    max: { key: 'maxSoc', label: '최대값' },
+    avg: { key: 'avrSoc', label: '평균', mr: 7.75 },
   },
   {
-    label: "SOH(%)",
-    min: { key: "minSoh", label: "최소값" },
-    max: { key: "maxSoh", label: "최대값" },
-    avg: { key: "avrSoh", label: "평균", mr: 7.75 },
+    label: 'SOH(%)',
+    min: { key: 'minSoh', label: '최소값' },
+    max: { key: 'maxSoh', label: '최대값' },
+    avg: { key: 'avrSoh', label: '평균', mr: 7.75 },
   },
-];
+]
