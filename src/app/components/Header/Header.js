@@ -79,7 +79,7 @@ const Header = () => {
         background: '#fff',
         color: '#000',
         boxShadow: 'none',
-        p: '12px',
+        p: isMobile ? 0 : '12px',
       }}
     >
       <Toolbar sx={isMobile && { justifyContent: 'space-between' }}>
@@ -92,7 +92,7 @@ const Header = () => {
         <Typography
           variant={isMobile ? 'h5' : 'h4'}
           noWrap
-          sx={isMobile ? { fontWeight: 500 } : { fontWeight: 600 }}
+          sx={isMobile ? { fontWeight: 600 } : { fontWeight: 600 }}
         >
           배터리 모니터링
         </Typography>

@@ -223,7 +223,7 @@ const AlarmPanel = () => {
 export default AlarmPanel
 
 const columns = [
-  { id: 'idx', label: '#순번', minWidth: 50 },
+  { id: 'idx', label: '#순번', minWidth: 80 },
   { id: 'time', label: '발생시각', minWidth: 100 },
   { id: 'message', label: '구분', minWidth: 100 },
 ]
