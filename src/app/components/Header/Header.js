@@ -79,7 +79,7 @@ const Header = () => {
         background: '#fff',
         color: '#000',
         boxShadow: 'none',
-        p: isMobile ? 0 : '12px',
+        p: isMobile ? 0 : 1.5,
       }}
     >
       <Toolbar sx={isMobile && { justifyContent: 'space-between' }}>

@@ -7,6 +7,7 @@ import { useBatteryContext } from '../../context/BatteryContext'
 import ReactPlayer from 'react-player'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { Chip } from '@mui/material'
 
 export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
   const theme = useTheme()
@@ -26,11 +27,13 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
       <ModalContent sx={isMobile ? { width: 300 } : { width: 600 }}>
         <h2 id="unstyled-modal-title" className="modal-title">
           {`배터리${batteryMeasure.batteryNumber} 내부보기`}
+          <Chip
+            label={rruInfo.cameraStatus ? '연결됨' : '연결끊김'}
+            color={rruInfo.cameraStatus ? 'success' : 'error'}
+          />
         </h2>
+
         {/* <p id="unstyled-modal-description" className="modal-description">
-          {`cameraStatus: ${rruInfo.cameraStatus}`}
-        </p>
-        <p id="unstyled-modal-description" className="modal-description">
           {`ledControl: ${rruInfo.ledControl}`}
         </p> */}
         <p id="unstyled-modal-description" className="modal-description">
@@ -157,6 +160,8 @@ const ModalContent = styled('div')(
     color: ${theme.palette.mode === 'dark' ? grey[50] : grey[900]};
 
     & .modal-title {
+      display: flex;
+      justify-content: space-between;
       margin: 0;
       line-height: 1.5rem;
       margin-bottom: 8px;
