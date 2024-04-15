@@ -1,10 +1,9 @@
-import * as React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { styled, css } from '@mui/system'
 import { Modal as BaseModal } from '@mui/base/Modal'
 import { useBatteryContext } from '../../context/BatteryContext'
-import ReactPlayer from 'react-player'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { Chip } from '@mui/material'
@@ -14,6 +13,14 @@ export default function BatteryInsideModal({ open, setOpen }) {
   const isMobile = useMediaQuery(theme.breakpoints.only('xs'))
   const { rruInfo } = useBatteryContext()
   const handleClose = () => setOpen(false)
+
+  // useEffect(() => {
+  //   const getCameraStatus = async () => {
+  //     const cameraStatus = await axios.get('http://220.117.38.2:8099/devstatus')
+  //     console.log(cameraStatus, 'cameraStatus')
+  //   }
+  //   getCameraStatus()
+  // }, [])
 
   return (
     <Modal
@@ -45,79 +52,34 @@ export default function BatteryInsideModal({ open, setOpen }) {
         </p> */}
         <p id="unstyled-modal-description" className="modal-description">
           ch1
-          <ReactPlayer
-            width={isMobile ? `300px` : `550px`}
-            height={isMobile ? `150px` : '300px'}
-            url={rruInfo.camera1Url}
-            controls={true}
-            playing={true}
-            // light is usefull incase of dark mode
-            light={false}
-            // picture in picture
-            pip={true}
-          />
-          <source src={rruInfo.camera1Url} type="video/mp4" />
         </p>
+        <IframeWrapper>
+          <Iframe src="http://220.117.38.2:8083/stream/player/ch1" />
+        </IframeWrapper>
         <p id="unstyled-modal-description" className="modal-description">
           ch2
-          <ReactPlayer
-            width={isMobile ? `300px` : `550px`}
-            height={isMobile ? `150px` : '300px'}
-            url={rruInfo.camera2Url}
-            controls={true}
-            playing={true}
-            // light is usefull incase of dark mode
-            light={false}
-            // picture in picture
-            pip={true}
-          />
-          <source src={rruInfo.camera2Url} type="video/mp4" />
         </p>
+        <IframeWrapper>
+          <Iframe src="http://220.117.38.2:8083/stream/player/ch2" />
+        </IframeWrapper>
         <p id="unstyled-modal-description" className="modal-description">
           ch3
-          <ReactPlayer
-            width={isMobile ? `300px` : `550px`}
-            height={isMobile ? `150px` : '300px'}
-            url={rruInfo.camera3Url}
-            controls={true}
-            playing={true}
-            // light is usefull incase of dark mode
-            light={false}
-            // picture in picture
-            pip={true}
-          />
-          <source src={rruInfo.camera3Url} type="video/mp4" />
         </p>
+        <IframeWrapper>
+          <Iframe src="http://220.117.38.2:8083/stream/player/ch3" />
+        </IframeWrapper>
         <p id="unstyled-modal-description" className="modal-description">
           ch4
-          <ReactPlayer
-            width={isMobile ? `300px` : `550px`}
-            height={isMobile ? `150px` : '300px'}
-            url={rruInfo.camera4Url}
-            controls={true}
-            playing={true}
-            // light is usefull incase of dark mode
-            light={false}
-            // picture in picture
-            pip={true}
-          />
-          <source src={rruInfo.camera4Url} type="video/mp4" />
         </p>
+        <IframeWrapper>
+          <Iframe src="http://220.117.38.2:8083/stream/player/ch4" />
+        </IframeWrapper>
         <p id="unstyled-modal-description" className="modal-description">
           ch5
-          <ReactPlayer
-            width={isMobile ? `300px` : `550px`}
-            height={isMobile ? `150px` : '300px'}
-            url={rruInfo.camera5Url}
-            controls={true}
-            playing={true}
-            // light is usefull incase of dark mode
-            light={false}
-            // picture in picture
-            pip={true}
-          />
-          <source src={rruInfo.camera5Url} type="video/mp4" />
         </p>
+        <IframeWrapper>
+          <Iframe src="http://220.117.38.2:8083/stream/player/ch5" />
+        </IframeWrapper>
       </ModalContent>
     </Modal>
   )
@@ -215,6 +177,21 @@ const ModalContent = styled('div')(
     }
   `
 )
+
+const IframeWrapper = styled('div')`
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 -> 9/16x100 */
+  overflow: hidden;
+`
+
+const Iframe = styled('iframe')`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+`
 
 // const TriggerButton = styled('button')(
 //   ({ theme }) => css`
