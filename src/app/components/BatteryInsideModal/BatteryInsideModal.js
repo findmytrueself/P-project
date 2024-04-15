@@ -37,7 +37,7 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
           {`ledControl: ${rruInfo.ledControl}`}
         </p> */}
         <p id="unstyled-modal-description" className="modal-description">
-          camera1
+          ch1
           <ReactPlayer
             width={isMobile ? `250px` : `550px`}
             height={isMobile ? `150px` : '300px'}
@@ -52,7 +52,7 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
           <source src={rruInfo.camera1Url} type="video/mp4" />
         </p>
         <p id="unstyled-modal-description" className="modal-description">
-          camera2
+          ch2
           <ReactPlayer
             width={isMobile ? `250px` : `550px`}
             height={isMobile ? `150px` : '300px'}
@@ -67,7 +67,7 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
           <source src={rruInfo.camera2Url} type="video/mp4" />
         </p>
         <p id="unstyled-modal-description" className="modal-description">
-          camera3
+          ch3
           <ReactPlayer
             width={isMobile ? `250px` : `550px`}
             height={isMobile ? `150px` : '300px'}
