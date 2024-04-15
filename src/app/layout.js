@@ -8,8 +8,8 @@ import Header from './components/Header'
 import { BatteryContextProvider } from './context/BatteryContext'
 
 export const metadata = {
-  title: 'Park Project',
-  description: 'Park Project',
+  title: 'Battery Monitoring',
+  description: 'Battery Monitoring',
 }
 
 export default function RootLayout({ children }) {
