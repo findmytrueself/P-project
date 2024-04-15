@@ -23,16 +23,23 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
       onClose={handleClose}
       slots={{ backdrop: StyledBackdrop }}
     >
-      <ModalContent sx={isMobile ? { width: 250 } : { width: 450 }}>
+      <ModalContent sx={isMobile ? { width: 300 } : { width: 450 }}>
         <h2 id="unstyled-modal-title" className="modal-title">
           {`배터리${batteryMeasure.batteryNumber} 내부보기`}
         </h2>
         <p id="unstyled-modal-description" className="modal-description">
+          {`cameraStatus: ${rruInfo.cameraStatus}`}
+        </p>
+        <p id="unstyled-modal-description" className="modal-description">
+          {`ledControl: ${rruInfo.ledControl}`}
+        </p>
+        <p id="unstyled-modal-description" className="modal-description">
           <ReactPlayer
-            width={isMobile ? `200px` : `400px`}
+            width={isMobile ? `250px` : `400px`}
             height={isMobile ? `150px` : '300px'}
             url={rruInfo.camera1Url}
             controls={true}
+            playing={true}
             // light is usefull incase of dark mode
             light={false}
             // picture in picture
@@ -42,10 +49,11 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
         </p>
         <p id="unstyled-modal-description" className="modal-description">
           <ReactPlayer
-            width={isMobile ? `200px` : `400px`}
+            width={isMobile ? `250px` : `400px`}
             height={isMobile ? `150px` : '300px'}
             url={rruInfo.camera2Url}
             controls={true}
+            playing={true}
             // light is usefull incase of dark mode
             light={false}
             // picture in picture
@@ -55,22 +63,17 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
         </p>
         <p id="unstyled-modal-description" className="modal-description">
           <ReactPlayer
-            width={isMobile ? `200px` : `400px`}
+            width={isMobile ? `250px` : `400px`}
             height={isMobile ? `150px` : '300px'}
             url={rruInfo.camera3Url}
             controls={true}
+            playing={true}
             // light is usefull incase of dark mode
             light={false}
             // picture in picture
             pip={true}
           />
           <source src={rruInfo.camera3Url} type="video/mp4" />
-        </p>
-        <p id="unstyled-modal-description" className="modal-description">
-          {`cameraStatus: ${rruInfo.cameraStatus}`}
-        </p>
-        <p id="unstyled-modal-description" className="modal-description">
-          {`ledControl: ${rruInfo.ledControl}`}
         </p>
       </ModalContent>
     </Modal>
