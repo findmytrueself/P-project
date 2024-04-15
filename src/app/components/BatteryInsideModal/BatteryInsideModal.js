@@ -27,12 +27,12 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
         <h2 id="unstyled-modal-title" className="modal-title">
           {`배터리${batteryMeasure.batteryNumber} 내부보기`}
         </h2>
-        <p id="unstyled-modal-description" className="modal-description">
+        {/* <p id="unstyled-modal-description" className="modal-description">
           {`cameraStatus: ${rruInfo.cameraStatus}`}
         </p>
         <p id="unstyled-modal-description" className="modal-description">
           {`ledControl: ${rruInfo.ledControl}`}
-        </p>
+        </p> */}
         <p id="unstyled-modal-description" className="modal-description">
           camera1
           <ReactPlayer
