@@ -15,27 +15,27 @@ import {
   Paper,
   Chip,
   // Skeleton,
-} from "@mui/material";
-import React, { useState } from "react";
-import { useBatteryContext } from "../../context/BatteryContext";
-import BatteryInsideModal from "../BatteryInsideModal";
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
+} from '@mui/material'
+import React, { useState } from 'react'
+import { useBatteryContext } from '../../context/BatteryContext'
+import BatteryInsideModal from '../BatteryInsideModal'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const DashboardPanel = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
-  const { batteryStatus } = useBatteryContext();
-  const [open, setOpen] = useState(false);
-  const [batteryMeasure, setBatteryMeasure] = useState({});
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.only('xs'))
+  const { batteryStatus } = useBatteryContext()
+  const [open, setOpen] = useState(false)
+  const [batteryMeasure, setBatteryMeasure] = useState({})
 
   const handleClickInsideModal = (batteryNumber) => {
-    setOpen(true);
-    setBatteryMeasure(batteryStatus.batteryMeasures[batteryNumber]);
-  };
+    setOpen(true)
+    setBatteryMeasure(batteryStatus.batteryMeasures[batteryNumber])
+  }
 
   return (
-    <Box sx={{ p: "16px" }}>
+    <Box sx={{ p: '16px' }}>
       {open ? (
         <BatteryInsideModal
           open={open}
@@ -47,9 +47,9 @@ const DashboardPanel = () => {
       <Card
         sx={{
           p: 0,
-          boxShadow: "none",
-          border: "1px solid rgba(224, 224, 224, 1)",
-          "& .MuiCardContent-root:last-child": {
+          boxShadow: 'none',
+          border: '1px solid rgba(224, 224, 224, 1)',
+          '& .MuiCardContent-root:last-child': {
             paddingBottom: 0,
           },
         }}
@@ -57,16 +57,47 @@ const DashboardPanel = () => {
         <CardContent sx={{ p: 0 }}>
           <Box
             sx={{
-              padding: "0 12px",
-              borderBottom: "1px solid rgba(224, 224, 224, 1)",
+              padding: '0 12px',
+              borderBottom: '1px solid rgba(224, 224, 224, 1)',
+              display: 'flex',
+              justifyContent: 'space-between',
             }}
           >
             <Typography
               sx={{
                 p: 1,
                 fontWeight: 500,
-                fontSize: "0.875rem",
-                lineHeight: "1.5rem",
+                fontSize: '0.875rem',
+                lineHeight: '1.5rem',
+              }}
+              variant="h7"
+              component="div"
+            >
+              함체 내부보기
+            </Typography>
+            <Button
+              variant="outlined"
+              sx={{
+                minWidth: isMobile ? '100px' : '150px',
+                maxHeight: '40px',
+              }}
+              onClick={handleClickInsideModal}
+            >
+              내부보기
+            </Button>
+          </Box>
+          <Box
+            sx={{
+              padding: '0 12px',
+              borderBottom: '1px solid rgba(224, 224, 224, 1)',
+            }}
+          >
+            <Typography
+              sx={{
+                p: 1,
+                fontWeight: 500,
+                fontSize: '0.875rem',
+                lineHeight: '1.5rem',
               }}
               variant="h7"
               component="div"
@@ -83,18 +114,18 @@ const DashboardPanel = () => {
                 direction="row"
                 justifyContent="space-between"
                 sx={{
-                  padding: "0 12px",
-                  borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                  padding: '0 12px',
+                  borderBottom: '1px solid rgba(224, 224, 224, 1)',
                 }}
               >
-                <Box sx={{ display: "flex" }}>
+                <Box sx={{ display: 'flex' }}>
                   <Typography
                     sx={{
                       p: 1,
                       mr: 6,
                       fontWeight: 400,
-                      fontSize: "0.875rem",
-                      lineHeight: "2rem",
+                      fontSize: '0.875rem',
+                      lineHeight: '2rem',
                     }}
                     variant="h7"
                     component="div"
@@ -106,8 +137,8 @@ const DashboardPanel = () => {
                     sx={{
                       p: 1,
                       fontWeight: 400,
-                      fontSize: "0.875rem",
-                      lineHeight: "2rem",
+                      fontSize: '0.875rem',
+                      lineHeight: '2rem',
                     }}
                     variant="h7"
                     component="div"
@@ -115,17 +146,6 @@ const DashboardPanel = () => {
                     {alarm.alarmCount}
                   </Typography>
                 </Box>
-                <Button
-                  variant="outlined"
-                  sx={{
-                    minWidth: isMobile ? "100px" : "150px",
-                    maxHeight: "40px",
-                    marginTop: "4px",
-                  }}
-                  onClick={() => handleClickInsideModal(alarm.batteryNumber)}
-                >
-                  내부보기
-                </Button>
               </Stack>
             ))}
         </CardContent>
@@ -134,8 +154,8 @@ const DashboardPanel = () => {
       <TableContainer
         sx={{
           mt: 4,
-          border: "1px solid rgba(224, 224, 224, 1)",
-          boxShadow: "none",
+          border: '1px solid rgba(224, 224, 224, 1)',
+          boxShadow: 'none',
         }}
         component={Paper}
       >
@@ -171,10 +191,10 @@ const DashboardPanel = () => {
                 >
                   {columns.map((column) => (
                     <TableCell key={column.id} align="left">
-                      {column.id === "communicationStatus" ? (
+                      {column.id === 'communicationStatus' ? (
                         <Chip
-                          label={battery[column.id] ? "연결됨" : "연결끊김"}
-                          color={battery[column.id] ? "success" : "error"}
+                          label={battery[column.id] ? '연결됨' : '연결끊김'}
+                          color={battery[column.id] ? 'success' : 'error'}
                         />
                       ) : (
                         battery[column.id]
@@ -187,17 +207,17 @@ const DashboardPanel = () => {
         </Table>
       </TableContainer>
     </Box>
-  );
-};
+  )
+}
 
-export default DashboardPanel;
+export default DashboardPanel
 
 const columns = [
-  { id: "batteryNumber", label: "배터리", minWidth: 80 },
-  { id: "communicationStatus", label: "연결상태", minWidth: 100 },
-  { id: "voltage", label: "전압(V)", minWidth: 100 },
-  { id: "temperature", label: "온도(°C)", minWidth: 100 },
-  { id: "resistance", label: "저항(mΩ)", minWidth: 100 },
-  { id: "soc", label: "SOC(%)", minWidth: 100 },
-  { id: "soh", label: "SOH(%)", minWidth: 100 },
-];
+  { id: 'batteryNumber', label: '배터리', minWidth: 80 },
+  { id: 'communicationStatus', label: '연결상태', minWidth: 100 },
+  { id: 'voltage', label: '전압(V)', minWidth: 100 },
+  { id: 'temperature', label: '온도(°C)', minWidth: 100 },
+  { id: 'resistance', label: '저항(mΩ)', minWidth: 100 },
+  { id: 'soc', label: 'SOC(%)', minWidth: 100 },
+  { id: 'soh', label: 'SOH(%)', minWidth: 100 },
+]

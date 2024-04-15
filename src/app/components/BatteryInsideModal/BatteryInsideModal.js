@@ -9,7 +9,7 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { Chip } from '@mui/material'
 
-export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
+export default function BatteryInsideModal({ open, setOpen }) {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.only('xs'))
   const { rruInfo } = useBatteryContext()
@@ -17,19 +17,26 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
 
   return (
     <Modal
-      sx={{ overflowY: 'auto' }}
       aria-labelledby="unstyled-modal-title"
       aria-describedby="unstyled-modal-description"
       open={open}
       onClose={handleClose}
       slots={{ backdrop: StyledBackdrop }}
     >
-      <ModalContent sx={isMobile ? { width: 300 } : { width: 600 }}>
+      <ModalContent sx={isMobile ? { width: 350 } : { width: 600 }}>
         <h2 id="unstyled-modal-title" className="modal-title">
-          {`배터리${batteryMeasure.batteryNumber} 내부보기`}
+          {`함체 내부보기`}
           <Chip
-            label={rruInfo.cameraStatus ? '연결됨' : '연결끊김'}
-            color={rruInfo.cameraStatus ? 'success' : 'error'}
+            label={
+              typeof rruInfo.cameraStatus === Boolean && rruInfo.cameraStatus
+                ? '연결됨'
+                : '연결끊김'
+            }
+            color={
+              typeof rruInfo.cameraStatus === Boolean && rruInfo.cameraStatus
+                ? 'success'
+                : 'error'
+            }
           />
         </h2>
 
@@ -39,7 +46,7 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
         <p id="unstyled-modal-description" className="modal-description">
           ch1
           <ReactPlayer
-            width={isMobile ? `250px` : `550px`}
+            width={isMobile ? `300px` : `550px`}
             height={isMobile ? `150px` : '300px'}
             url={rruInfo.camera1Url}
             controls={true}
@@ -54,7 +61,7 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
         <p id="unstyled-modal-description" className="modal-description">
           ch2
           <ReactPlayer
-            width={isMobile ? `250px` : `550px`}
+            width={isMobile ? `300px` : `550px`}
             height={isMobile ? `150px` : '300px'}
             url={rruInfo.camera2Url}
             controls={true}
@@ -69,7 +76,7 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
         <p id="unstyled-modal-description" className="modal-description">
           ch3
           <ReactPlayer
-            width={isMobile ? `250px` : `550px`}
+            width={isMobile ? `300px` : `550px`}
             height={isMobile ? `150px` : '300px'}
             url={rruInfo.camera3Url}
             controls={true}
@@ -80,6 +87,36 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
             pip={true}
           />
           <source src={rruInfo.camera3Url} type="video/mp4" />
+        </p>
+        <p id="unstyled-modal-description" className="modal-description">
+          ch4
+          <ReactPlayer
+            width={isMobile ? `300px` : `550px`}
+            height={isMobile ? `150px` : '300px'}
+            url={rruInfo.camera4Url}
+            controls={true}
+            playing={true}
+            // light is usefull incase of dark mode
+            light={false}
+            // picture in picture
+            pip={true}
+          />
+          <source src={rruInfo.camera4Url} type="video/mp4" />
+        </p>
+        <p id="unstyled-modal-description" className="modal-description">
+          ch5
+          <ReactPlayer
+            width={isMobile ? `300px` : `550px`}
+            height={isMobile ? `150px` : '300px'}
+            url={rruInfo.camera5Url}
+            controls={true}
+            playing={true}
+            // light is usefull incase of dark mode
+            light={false}
+            // picture in picture
+            pip={true}
+          />
+          <source src={rruInfo.camera5Url} type="video/mp4" />
         </p>
       </ModalContent>
     </Modal>
@@ -158,6 +195,8 @@ const ModalContent = styled('div')(
       ${theme.palette.mode === 'dark' ? 'rgb(0 0 0 / 0.5)' : 'rgb(0 0 0 / 0.2)'};
     padding: 24px;
     color: ${theme.palette.mode === 'dark' ? grey[50] : grey[900]};
+    height: 80vh;
+    overflow: scroll;
 
     & .modal-title {
       display: flex;
