@@ -209,7 +209,6 @@ const MeasurementPanel = () => {
       {tab1 === 0 && (
         <>
           <Tabs
-            sx={{ overflowX: 'auto' }}
             value={tab2}
             onChange={(e, newValue) => setTab2(newValue)}
             TabIndicatorProps={{
@@ -221,7 +220,7 @@ const MeasurementPanel = () => {
             <Tab
               sx={{
                 border: '1px solid rgba(224, 224, 224, 1)',
-                minWidth: isMobile ? '80px' : '100px',
+                minWidth: isMobile ? '50px' : '100px',
                 minHeight: '40px',
               }}
               label="전압(V)"
@@ -230,7 +229,7 @@ const MeasurementPanel = () => {
             <Tab
               sx={{
                 border: '1px solid rgba(224, 224, 224, 1)',
-                minWidth: isMobile ? '80px' : '100px',
+                minWidth: isMobile ? '50px' : '100px',
                 minHeight: '40px',
               }}
               label="온도(°C)"
@@ -239,7 +238,7 @@ const MeasurementPanel = () => {
             <Tab
               sx={{
                 border: '1px solid rgba(224, 224, 224, 1)',
-                minWidth: isMobile ? '80px' : '100px',
+                minWidth: isMobile ? '50px' : '100px',
                 minHeight: '40px',
                 textTransform: 'none',
               }}
@@ -249,7 +248,7 @@ const MeasurementPanel = () => {
             <Tab
               sx={{
                 border: '1px solid rgba(224, 224, 224, 1)',
-                minWidth: isMobile ? '80px' : '100px',
+                minWidth: isMobile ? '50px' : '100px',
                 minHeight: '40px',
               }}
               label="SOC(%)"
@@ -258,7 +257,7 @@ const MeasurementPanel = () => {
             <Tab
               sx={{
                 border: '1px solid rgba(224, 224, 224, 1)',
-                minWidth: isMobile ? '80px' : '100px',
+                minWidth: isMobile ? '50px' : '100px',
                 minHeight: '40px',
               }}
               label="SOH(%)"
@@ -267,7 +266,7 @@ const MeasurementPanel = () => {
           </Tabs>
           {batteryHistory.length > 0 && (
             <BarChart
-              dataset={isMobile ? batteryHistory.slice(0, 8) : batteryHistory}
+              dataset={isMobile ? batteryHistory.slice(0, 9) : batteryHistory}
               xAxis={[
                 {
                   scaleType: 'band',
