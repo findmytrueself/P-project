@@ -5,8 +5,12 @@ import { styled, css } from '@mui/system'
 import { Modal as BaseModal } from '@mui/base/Modal'
 import { useBatteryContext } from '../../context/BatteryContext'
 import ReactPlayer from 'react-player'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.only('xs'))
   const { rruInfo } = useBatteryContext()
   const handleClose = () => setOpen(false)
 
@@ -19,14 +23,14 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
       onClose={handleClose}
       slots={{ backdrop: StyledBackdrop }}
     >
-      <ModalContent sx={{ width: 450 }}>
+      <ModalContent sx={isMobile ? { width: 250 } : { width: 450 }}>
         <h2 id="unstyled-modal-title" className="modal-title">
           {`배터리${batteryMeasure.batteryNumber} 내부보기`}
         </h2>
         <p id="unstyled-modal-description" className="modal-description">
           <ReactPlayer
-            width="400px"
-            height="300px"
+            width={isMobile ? `200px` : `400px`}
+            height={isMobile ? `150px` : '300px'}
             url={rruInfo.camera1Url}
             controls={true}
             // light is usefull incase of dark mode
@@ -38,8 +42,8 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
         </p>
         <p id="unstyled-modal-description" className="modal-description">
           <ReactPlayer
-            width="400px"
-            height="300px"
+            width={isMobile ? `200px` : `400px`}
+            height={isMobile ? `150px` : '300px'}
             url={rruInfo.camera2Url}
             controls={true}
             // light is usefull incase of dark mode
@@ -51,8 +55,8 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
         </p>
         <p id="unstyled-modal-description" className="modal-description">
           <ReactPlayer
-            width="400px"
-            height="300px"
+            width={isMobile ? `200px` : `400px`}
+            height={isMobile ? `150px` : '300px'}
             url={rruInfo.camera3Url}
             controls={true}
             // light is usefull incase of dark mode
