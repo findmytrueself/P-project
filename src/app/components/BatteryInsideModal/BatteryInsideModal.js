@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { styled, css } from '@mui/system'
 import { Modal as BaseModal } from '@mui/base/Modal'
 import { useBatteryContext } from '../../context/BatteryContext'
+import ReactPlayer from 'react-player'
 
 export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
   const { rruInfo } = useBatteryContext()
@@ -11,42 +12,58 @@ export default function BatteryInsideModal({ open, setOpen, batteryMeasure }) {
 
   return (
     <Modal
+      sx={{ overflowY: 'auto' }}
       aria-labelledby="unstyled-modal-title"
       aria-describedby="unstyled-modal-description"
       open={open}
       onClose={handleClose}
       slots={{ backdrop: StyledBackdrop }}
     >
-      <ModalContent sx={{ width: 400 }}>
+      <ModalContent sx={{ width: 450 }}>
         <h2 id="unstyled-modal-title" className="modal-title">
           {`배터리${batteryMeasure.batteryNumber} 내부보기`}
         </h2>
         <p id="unstyled-modal-description" className="modal-description">
-          {`alarmLight: ${batteryMeasure.alarmLight}`}
+          <ReactPlayer
+            width="400px"
+            height="300px"
+            url={rruInfo.camera1Url}
+            controls={true}
+            // light is usefull incase of dark mode
+            light={false}
+            // picture in picture
+            pip={true}
+          />
+          <source src={rruInfo.camera1Url} type="video/mp4" />
         </p>
         <p id="unstyled-modal-description" className="modal-description">
-          {`communicationStatus: ${batteryMeasure.communicationStatus}`}
+          <ReactPlayer
+            width="400px"
+            height="300px"
+            url={rruInfo.camera2Url}
+            controls={true}
+            // light is usefull incase of dark mode
+            light={false}
+            // picture in picture
+            pip={true}
+          />
+          <source src={rruInfo.camera2Url} type="video/mp4" />
         </p>
         <p id="unstyled-modal-description" className="modal-description">
-          {`alarmInfo: ${batteryMeasure.alarmInfo}`}
-        </p>
-        <p id="unstyled-modal-description" className="modal-description">
-          {`camera1Url: ${rruInfo.camera1Url}`}
-        </p>
-        <p id="unstyled-modal-description" className="modal-description">
-          {`camera2Url: ${rruInfo.camera2Url}`}
-        </p>
-        <p id="unstyled-modal-description" className="modal-description">
-          {`camera3Url: ${rruInfo.camera3Url}`}
+          <ReactPlayer
+            width="400px"
+            height="300px"
+            url={rruInfo.camera3Url}
+            controls={true}
+            // light is usefull incase of dark mode
+            light={false}
+            // picture in picture
+            pip={true}
+          />
+          <source src={rruInfo.camera3Url} type="video/mp4" />
         </p>
         <p id="unstyled-modal-description" className="modal-description">
           {`cameraStatus: ${rruInfo.cameraStatus}`}
-        </p>
-        <p id="unstyled-modal-description" className="modal-description">
-          {`hostAddress: ${rruInfo.hostAddress}`}
-        </p>
-        <p id="unstyled-modal-description" className="modal-description">
-          {`hostPort: ${rruInfo.hostPort}`}
         </p>
         <p id="unstyled-modal-description" className="modal-description">
           {`ledControl: ${rruInfo.ledControl}`}
